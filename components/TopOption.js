@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 
 import TopOptionButton from "./TopOptionButton";

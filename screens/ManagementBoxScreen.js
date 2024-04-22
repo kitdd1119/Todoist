@@ -1,4 +1,3 @@
-// ManagementBoxScreen.js
 import { StyleSheet, View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

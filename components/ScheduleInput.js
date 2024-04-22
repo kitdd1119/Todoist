@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 5,
+        opacity: 0.5
     },
     buttonContainer: {
         flexDirection: 'row',

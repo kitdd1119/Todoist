@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, StyleSheet, View, Text } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from 'expo-status-bar';
@@ -101,7 +101,12 @@ export default function App() {
         />
         <BottomTab.Screen
           name="검색 화면"
-          component={SearchScreen}
+          component={() => (
+            <SearchScreen
+              courseSchedules={courseSchedules}
+              setCourseSchedules={setCourseSchedules}
+            />
+          )}
           options={{
             headerShown: false,
             tabBarLabel: '검색',
