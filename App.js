@@ -49,17 +49,6 @@ export default function App() {
       >
         <BottomTab.Screen
           name="오늘 화면"
-          component={() => (
-            <>
-              <View style={styles.TopOption}>
-                <TopOption />
-              </View>
-              <TodayScreen
-                courseSchedules={courseSchedules}
-                setCourseSchedules={setCourseSchedules}
-              />
-            </>
-          )}
           options={{
             headerShown: false,
             tabBarLabel: '오늘',
@@ -72,20 +61,21 @@ export default function App() {
               />
             )
           }}
-        />
-        <BottomTab.Screen
-          name="관리함 화면"
-          component={() => (
+        >
+          {() => (
             <>
               <View style={styles.TopOption}>
                 <TopOption />
               </View>
-              <ManagementBoxScreen
+              <TodayScreen
                 courseSchedules={courseSchedules}
                 setCourseSchedules={setCourseSchedules}
               />
             </>
           )}
+        </BottomTab.Screen>
+        <BottomTab.Screen
+          name="관리함 화면"
           options={{
             headerShown: false,
             tabBarLabel: '관리함',
@@ -98,15 +88,21 @@ export default function App() {
               />
             )
           }}
-        />
+        >
+          {() => (
+            <>
+              <View style={styles.TopOption}>
+                <TopOption />
+              </View>
+              <ManagementBoxScreen
+                courseSchedules={courseSchedules}
+                setCourseSchedules={setCourseSchedules}
+              />
+            </>
+          )}
+        </BottomTab.Screen>
         <BottomTab.Screen
           name="검색 화면"
-          component={() => (
-            <SearchScreen
-              courseSchedules={courseSchedules}
-              setCourseSchedules={setCourseSchedules}
-            />
-          )}
           options={{
             headerShown: false,
             tabBarLabel: '검색',
@@ -119,7 +115,14 @@ export default function App() {
               />
             )
           }}
-        />
+        >
+          {() => (
+            <SearchScreen
+              courseSchedules={courseSchedules}
+              setCourseSchedules={setCourseSchedules}
+            />
+          )}
+        </BottomTab.Screen>
         <BottomTab.Screen
           name="목록 화면"
           component={ListScreen}
@@ -150,7 +153,7 @@ export default function App() {
 const styles = StyleSheet.create({
   TopOption: {
     position: 'absolute',
-    top: 10,
+    top: 32,
     right: 10,
     zIndex: 999,
   },

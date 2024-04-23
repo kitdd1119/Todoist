@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     topNavigation: {
-        marginTop: 38,
+        marginTop: 28,
         borderBottomWidth: 2,
         borderBottomColor: '#fafafa',
     },
