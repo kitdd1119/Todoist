@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { StyleSheet, TouchableOpacity, View, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, TouchableWithoutFeedback } from "react-native";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { Menu } from "react-native-paper"
+import { Menu, Snackbar } from "react-native-paper"
+import Clipboard from "@react-native-clipboard/clipboard";
 
 import Colors from "../constants/colors";
 
 function TopOptionButton() {
     const [menuVisible, setMenuVisible] = useState(false);
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
 
     function menuOn() {
         setMenuVisible(true);
@@ -15,6 +17,18 @@ function TopOptionButton() {
     function menuOff() {
         setMenuVisible(false);
     }
+
+    function snackbarOn() {
+        setSnackbarVisible(true);
+    }
+
+    function snackbarOff() {
+        setSnackbarVisible(false);
+    }
+
+    // const copyToClipboard = () => {
+    //     Clipboard.setString('hello world');
+    // };
 
     return (
         <View style={styles.container}>
@@ -32,15 +46,35 @@ function TopOptionButton() {
                     >
                         <TouchableWithoutFeedback>
                             <View style={styles.menuContainer}>
-                                <Menu.Item onPress={() => {menuOff();}} title="오늘 보기 링크 복사" />
-                                <Menu.Item onPress={() => {}} title="작업 선택" />
-                                <Menu.Item onPress={() => {}} title="보기" />
-                                <Menu.Item onPress={() => {}} title="활동 로그" />
+                                <Menu.Item
+                                    onPress={() => {
+                                        // copyToClipboard;
+                                        snackbarOn();
+                                        menuOff();
+                                    }}
+                                    title="오늘 보기 링크 복사"
+                                >
+                                </Menu.Item>
+                                <Menu.Item onPress={() => { }} title="작업 선택" />
+                                <Menu.Item onPress={() => { }} title="보기" />
+                                <Menu.Item onPress={() => { }} title="활동 로그" />
                             </View>
                         </TouchableWithoutFeedback>
                     </Menu>
                 </View>
             </TouchableWithoutFeedback>
+            <Snackbar
+                visible={snackbarVisible}
+                onDismiss={snackbarOff}
+                duration={2000}
+                style={{ width: 300, top: 790, right: 340 }}
+            >
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity onPress={snackbarOff}>
+                        <Text style={{ color: '#fff' }}>링크가 복사되었습니다.</Text>
+                    </TouchableOpacity>
+                </View>
+            </Snackbar>
         </View>
     )
 }
@@ -52,7 +86,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     screen: {
-        zIndex: 100, 
+        zIndex: 100,
     },
     option: {
         width: 18,
