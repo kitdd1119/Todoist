@@ -6,7 +6,7 @@ import { Menu, Snackbar } from "react-native-paper"
 
 import Colors from "../../constants/colors";
 
-function TopOptionButton() {
+function TopOptionButton({ todayScreen }) {
     const [menuVisible, setMenuVisible] = useState(false);
     const [snackbarVisible, setSnackbarVisible] = useState(false);
 
@@ -28,7 +28,7 @@ function TopOptionButton() {
 
     // 링크 복사 기능은 웹에서 구현되는데 앱에서는 에러 뜨는 듯함.
     // 기능적으로는 구현이 되는 것 같으니 다른 기능 추가하고 나중에 오류 해결 해야 할 듯함.
-    
+
     // async function copyCurrentURL() {
     //     try {
     //         const url = await Linking.getInitialURL();
@@ -47,33 +47,37 @@ function TopOptionButton() {
 
     return (
         <View style={styles.container}>
-            <TouchableWithoutFeedback onPress={menuOff}>
-                <View style={styles.screen}>
-                    <Menu
-                        visible={menuVisible}
-                        onDismiss={menuOff}
-                        style={styles.menu}
-                        anchor={
-                            <TouchableOpacity onPress={menuOn} style={styles.option}>
-                                <SimpleLineIcons name="options" size={18} color={Colors.mainColor} />
-                            </TouchableOpacity>
-                        }
-                    >
-                        <TouchableWithoutFeedback>
-                            <View style={styles.menuContainer}>
-                                <Menu.Item
-                                    onPress={copyToClipboard}
-                                    title="오늘 보기 링크 복사"
-                                >
-                                </Menu.Item>
-                                <Menu.Item onPress={() => { }} title="작업 선택" />
-                                <Menu.Item onPress={() => { }} title="보기" />
-                                <Menu.Item onPress={() => { }} title="활동 로그" />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </Menu>
+            <Menu
+                visible={menuVisible}
+                onDismiss={menuOff}
+                style={styles.menu}
+                anchor={
+                    <TouchableOpacity onPress={menuOn} style={styles.option}>
+                        <SimpleLineIcons name="options" size={18} color={Colors.mainColor} />
+                    </TouchableOpacity>
+                }
+            >
+                <View style={styles.menuContainer}>
+                    {todayScreen ? (
+                        <>
+                            <Menu.Item onPress={copyToClipboard} title="오늘 보기 링크 복사" />
+                            <Menu.Item onPress={() => { }} title="작업 선택" />
+                            <Menu.Item onPress={() => { }} title="보기" />
+                            <Menu.Item onPress={() => { }} title="활동 로그" />
+                        </>
+                    ) : (
+                        <>
+                            <Menu.Item onPress={() => { }} title="댓글" />
+                            <Menu.Item onPress={() => { }} title="섹션 추가" />
+                            <Menu.Item onPress={() => { }} title="완료한 작업 표시" />
+                            <Menu.Item onPress={copyToClipboard} title="관리함 링크 복사" />
+                            <Menu.Item onPress={() => { }} title="작업 선택" />
+                            <Menu.Item onPress={() => { }} title="보기" />
+                            <Menu.Item onPress={() => { }} title="활동 로그" />
+                        </>
+                    )}
                 </View>
-            </TouchableWithoutFeedback>
+            </Menu>
             <Snackbar
                 visible={snackbarVisible}
                 onDismiss={snackbarOff}
@@ -95,9 +99,6 @@ export default TopOptionButton;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    screen: {
-        zIndex: 100,
     },
     option: {
         width: 18,

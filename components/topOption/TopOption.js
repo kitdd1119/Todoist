@@ -3,12 +3,12 @@ import { PaperProvider } from "react-native-paper";
 
 import TopOptionButton from "./TopOptionButton";
 
-function TopOption() {
+function TopOption({ todayScreen }) {
 
     return (
         <View style={styles.screen}>
             <PaperProvider>
-                <TopOptionButton />
+                <TopOptionButton todayScreen={todayScreen} />
             </PaperProvider>
         </View>
     )

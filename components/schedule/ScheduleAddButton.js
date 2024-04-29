@@ -4,7 +4,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-import Colors from "../constants/colors";
+import Colors from "../../constants/colors";
 
 function ScheduleAddButton(props) {
 
