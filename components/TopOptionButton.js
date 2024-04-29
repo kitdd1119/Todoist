@@ -4,7 +4,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { Menu, Snackbar } from "react-native-paper"
 // import Clipboard from "@react-native-clipboard/clipboard";
 
-import Colors from "../constants/colors";
+import Colors from "../../constants/colors";
 
 function TopOptionButton() {
     const [menuVisible, setMenuVisible] = useState(false);

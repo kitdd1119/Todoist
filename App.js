@@ -9,9 +9,9 @@ import ManagementBoxScreen from "./screens/ManagementBoxScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ListScreen from "./screens/ListScreen";
 import Colors from './constants/colors';
-import ScheduleInput from './components/ScheduleInput';
-import ScheduleAddButton from './components/ScheduleAddButton';
-import TopOption from './components/TopOption';
+import ScheduleInput from './components/schedule/ScheduleInput';
+import ScheduleAddButton from './components/schedule/ScheduleAddButton';
+import TopOption from './components/topOption/TopOption';
 
 const BottomTab = createBottomTabNavigator();
 

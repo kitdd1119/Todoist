@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 
-import AddScheduleList from "../components/AddScheduleList";
+import AddScheduleList from "../components/schedule/AddScheduleList";
 
 function TodayScreen({ courseSchedules, setCourseSchedules }) {
     const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -69,7 +69,7 @@ function TodayScreen({ courseSchedules, setCourseSchedules }) {
             >
                 <View>
                     <TouchableOpacity onPress={undoDeleteSchedule}>
-                        <Text style={{ color: '#fff' }}>실행 취소 을 완료했습니다.</Text>
+                        <Text style={{ color: '#fff' }}>실행 취소</Text>
                     </TouchableOpacity>
                 </View>
             </Snackbar>
@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
     },
     topNavigation: {
         marginTop: 30,
-        borderBottomWidth: 2,
-        borderBottomColor: '#fafafa',
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray', // #fafafa
     },
     text: {
         marginLeft: 10,
@@ -99,6 +99,5 @@ const styles = StyleSheet.create({
     },
     scheduleContainer: {
         flex: 1,
-        paddingHorizontal: 16,
     },
 });

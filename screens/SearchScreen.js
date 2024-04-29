@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 
-import AddScheduleList from "../components/AddScheduleList";
+import AddScheduleList from "../components/schedule/AddScheduleList";
 
 function SearchScreen({ courseSchedules, setCourseSchedules }) {
 
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     },
     topNavigation: {
         marginTop: 28,
-        borderBottomWidth: 2,
-        borderBottomColor: '#fafafa',
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray', // #fafafa
     },
     text: {
         marginLeft: 10,
@@ -100,6 +100,5 @@ const styles = StyleSheet.create({
     },
     scheduleContainer: {
         flex: 1,
-        paddingHorizontal: 16,
     },
-})
+});

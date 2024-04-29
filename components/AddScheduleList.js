@@ -1,31 +1,55 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, TouchableOpacity } from "react-native";
 
 function AddScheduleList(props) {
     return (
-        <View style={styles.scheduleItem}>
-            <Pressable
-                android_ripple={{ color: '#ddd' }}
-                onPress={props.onDeleteSchedule.bind(this, props.id)}
-                style={({ pressed }) => pressed && styles.pressedSchedule}
-            >
-                <Text style={styles.schedule}>{props.text}</Text>
-            </Pressable>
-        </View>
+        <TouchableOpacity>
+            <View style={styles.screen}>
+                <View style={styles.deleteButtonContainer}>
+                    <Pressable
+                        android_ripple={{ color: '#ddd' }}
+                        style={({ pressed }) => pressed && styles.pressedSchedule}
+                        onPress={props.onDeleteSchedule.bind(this, props.id)}
+                    >
+                        <Text style={styles.deleteScheduleButton}></Text>
+                    </Pressable>
+                </View>
+                <View style={styles.scheduleData}>
+                    <Text style={styles.schedule}>{props.text}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
     )
 }
 
 export default AddScheduleList;
 
 const styles = StyleSheet.create({
-    scheduleItem: {
-        width: '70%',
+    screen: {
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 8,
+        marginBottom: 8,
+    },
+    deleteButtonContainer: {
+        margin: 10,
+        width: 20,
+        height: 20,
+    },
+    scheduleData: {
+        flex: 1,
+        justifyContent: 'center',
+        alignContent: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray', // #fafafa
+    },
+    deleteScheduleButton: {
+        borderColor: 'black',
+        width: 20,
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 10,
-        borderStyle: 'solid',
-        backgroundColor: 'white',
-        margin: 8,
-        padding: 8,
+        borderRadius: 100,
     },
     schedule: {
         fontSize: 12,
