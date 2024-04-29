@@ -1,14 +1,39 @@
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Snackbar } from "react-native-paper";
 
 import AddScheduleList from "../components/AddScheduleList";
 
 function TodayScreen({ courseSchedules, setCourseSchedules }) {
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
+    const [deletedSchedule, setDeletedSchedule] = useState(null);
+
+    function snackbarOn() {
+        setSnackbarVisible(true);
+    }
+
+    function snackbarOff() {
+        setSnackbarVisible(false);
+    }
 
     function deleteScheduleHandler(id) {
-        setCourseSchedules((currentCourseSchedules) => {
-            return currentCourseSchedules.filter((schedule) => schedule.id !== id);
-        });
+        const scheduleToDelete = courseSchedules.find(schedule => schedule.id === id);
+        if (scheduleToDelete) {
+            setDeletedSchedule(scheduleToDelete);
+            setCourseSchedules((currentCourseSchedules) => {
+                return currentCourseSchedules.filter((schedule) => schedule.id !== id);
+            });
+            snackbarOn();
+        }
+    }
+
+    function undoDeleteSchedule() {
+        if (deletedSchedule) {
+            setCourseSchedules((currentCourseSchedules) => [...currentCourseSchedules, deletedSchedule]);
+            setDeletedSchedule(null);
+            snackbarOff();
+        }
     }
 
     return (
@@ -36,6 +61,18 @@ function TodayScreen({ courseSchedules, setCourseSchedules }) {
                     </FlatList>
                 </View>
             </View>
+            <Snackbar
+                visible={snackbarVisible}
+                onDismiss={snackbarOff}
+                duration={3000}
+                style={{ width: 350 }}
+            >
+                <View>
+                    <TouchableOpacity onPress={undoDeleteSchedule}>
+                        <Text style={{ color: '#fff' }}>실행 취소 을 완료했습니다.</Text>
+                    </TouchableOpacity>
+                </View>
+            </Snackbar>
         </SafeAreaView>
     )
 }
