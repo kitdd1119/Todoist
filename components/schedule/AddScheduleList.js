@@ -1,8 +1,25 @@
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, TouchableOpacity } from "react-native";
+import Calendars from "../calendar/Calendars";
 
 function AddScheduleList(props) {
+    const [modalIsVisible, setModalIsVisible] = useState(false);
+    const [calendarSelected, setCalendarSelected] = useState('');
+
+    function onCalendarHandler() {
+        setModalIsVisible(true);
+    }
+
+    function offCalendarHandler() {
+        setModalIsVisible(false);
+    }
+
+    function handleDayPress(day) {
+        setCalendarSelected(day.dateString);
+    }
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onCalendarHandler}>
             <View style={styles.screen}>
                 <View style={styles.deleteButtonContainer}>
                     <Pressable
@@ -17,6 +34,12 @@ function AddScheduleList(props) {
                     <Text style={styles.schedule}>{props.text}</Text>
                 </View>
             </View>
+            <Calendars 
+                visible={modalIsVisible}
+                selectedDate={calendarSelected}
+                onDayPress={handleDayPress}
+                offCalender={offCalendarHandler}
+            />
         </TouchableOpacity>
     )
 }
