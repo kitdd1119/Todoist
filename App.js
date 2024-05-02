@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from 'expo-status-bar';
@@ -35,9 +35,6 @@ export default function App() {
     ]);
   }
 
-  
-
-
   return (
     <NavigationContainer>
       <StatusBar style='dark' />
@@ -67,13 +64,13 @@ export default function App() {
         >
           {() => (
             <>
-                <View style={styles.TopOption}>
-                  <TopOption todayScreen={true} />
-                </View>
-                <TodayScreen
-                  courseSchedules={courseSchedules}
-                  setCourseSchedules={setCourseSchedules}
-                />
+              <View style={styles.TopOption}>
+                <TopOption todayScreen={true} />
+              </View>
+              <TodayScreen
+                courseSchedules={courseSchedules}
+                setCourseSchedules={setCourseSchedules}
+              />
             </>
           )}
         </BottomTab.Screen>
@@ -94,13 +91,13 @@ export default function App() {
         >
           {() => (
             <>
-                <View style={styles.TopOption}>
-                  <TopOption todayScreen={false} />
-                </View>
-                <ManagementBoxScreen
-                  courseSchedules={courseSchedules}
-                  setCourseSchedules={setCourseSchedules}
-                />
+              <View style={styles.TopOption}>
+                <TopOption todayScreen={false} />
+              </View>
+              <ManagementBoxScreen
+                courseSchedules={courseSchedules}
+                setCourseSchedules={setCourseSchedules}
+              />
             </>
           )}
         </BottomTab.Screen>
@@ -158,6 +155,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 32,
     right: 10,
-    zIndex: 999,
-  },
+    zIndex: 1,
+},
 });
