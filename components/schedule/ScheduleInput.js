@@ -8,6 +8,7 @@ import {
     TouchableWithoutFeedback,
     KeyboardAvoidingView,
 } from "react-native";
+import { schedule } from "../../util/http";
 
 function ScheduleInput(props) {
     const [enteredScheduleText, setEnteredScheduleText] = useState('');
@@ -18,6 +19,7 @@ function ScheduleInput(props) {
     }
 
     function addScheduleHandler() {
+        schedule(enteredScheduleText);
         props.onAddSchedule(enteredScheduleText);
         setEnteredScheduleText('');
     }
