@@ -127,7 +127,7 @@ function MainOverview() {
     </BottomTab.Navigator>
   )
 }
-
+// 관호쓰
 export default function App() {
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
