@@ -18,7 +18,23 @@ const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 function MainOverview() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseSchedules, setCourseSchedules] = useState([]);
+
+  function startScheduleAddButtonHandler() {
+    setModalIsVisible(true);
+  }
+
+  function endScheduleAddButtonHandler() {
+    setModalIsVisible(false);
+  }
+
+  function addScheduleHandler(enteredScheduleText) {
+    setCourseSchedules(currentCourseSchedules => [
+      ...currentCourseSchedules,
+      { text: enteredScheduleText, id: Math.random().toString() }
+    ]);
+  }
 
   return (
     <BottomTab.Navigator
@@ -47,15 +63,19 @@ function MainOverview() {
       >
         {() => (
           <>
-            <SafeAreaView style={styles.screen}>
-              <View style={styles.TopOption}>
-                <TopOption todayScreen={true} />
-              </View>
-              <TodayScreen
-                courseSchedules={courseSchedules}
-                setCourseSchedules={setCourseSchedules}
-              />
-            </SafeAreaView>
+            <View style={styles.TopOption}>
+              <TopOption todayScreen={true} />
+            </View>
+            <TodayScreen
+              courseSchedules={courseSchedules}
+              setCourseSchedules={setCourseSchedules}
+            />
+            <ScheduleInput
+              visible={modalIsVisible}
+              onAddSchedule={addScheduleHandler}
+              offSchedule={endScheduleAddButtonHandler}
+            />
+            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
           </>
         )}
       </BottomTab.Screen>
@@ -83,6 +103,12 @@ function MainOverview() {
               courseSchedules={courseSchedules}
               setCourseSchedules={setCourseSchedules}
             />
+            <ScheduleInput
+              visible={modalIsVisible}
+              onAddSchedule={addScheduleHandler}
+              offSchedule={endScheduleAddButtonHandler}
+            />
+            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
           </>
         )}
       </BottomTab.Screen>
@@ -102,15 +128,22 @@ function MainOverview() {
         }}
       >
         {() => (
-          <SearchScreen
-            courseSchedules={courseSchedules}
-            setCourseSchedules={setCourseSchedules}
-          />
+          <>
+            <SearchScreen
+              courseSchedules={courseSchedules}
+              setCourseSchedules={setCourseSchedules}
+            />
+            <ScheduleInput
+              visible={modalIsVisible}
+              onAddSchedule={addScheduleHandler}
+              offSchedule={endScheduleAddButtonHandler}
+            />
+            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+          </>
         )}
       </BottomTab.Screen>
       <BottomTab.Screen
         name="목록 화면"
-        component={ListScreen}
         options={{
           headerShown: false,
           tabBarLabel: '목록',
@@ -123,30 +156,24 @@ function MainOverview() {
             />
           )
         }}
-      />
+      >
+        {() => (
+          <>
+            <ListScreen />
+            <ScheduleInput
+              visible={modalIsVisible}
+              onAddSchedule={addScheduleHandler}
+              offSchedule={endScheduleAddButtonHandler}
+            />
+            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+          </>
+        )}
+      </BottomTab.Screen>
     </BottomTab.Navigator>
   )
 }
-// 관호쓰
+
 export default function App() {
-
-  const [modalIsVisible, setModalIsVisible] = useState(false);
-  const [courseSchedules, setCourseSchedules] = useState([]);
-
-  function startScheduleAddButtonHandler() {
-    setModalIsVisible(true);
-  }
-
-  function endScheduleAddButtonHandler() {
-    setModalIsVisible(false);
-  }
-
-  function addScheduleHandler(enteredScheduleText) {
-    setCourseSchedules(currentCourseSchedules => [
-      ...currentCourseSchedules,
-      { text: enteredScheduleText, id: Math.random().toString() }
-    ]);
-  }
 
   return (
     <>
@@ -160,14 +187,7 @@ export default function App() {
               headerShown: false
             }}
           />
-          {/* <Stack.Screen /> */}
         </Stack.Navigator>
-        <ScheduleInput
-          visible={modalIsVisible}
-          onAddSchedule={addScheduleHandler}
-          offSchedule={endScheduleAddButtonHandler}
-        />
-        <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
       </NavigationContainer>
     </>
   );
