@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 
 import AddScheduleList from "../components/schedule/AddScheduleList";
+import { fetchSchedule } from "../util/http";
 
 function TodayScreen({ courseSchedules, setCourseSchedules }) {
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [deletedSchedule, setDeletedSchedule] = useState(null);
+
+    // DB 에서 일정 값 가져오기
+    useEffect(() => {
+        async function getSchedules() {
+            const schedules = await fetchSchedule();
+        }
+        getSchedules();
+    }, []);
 
     function snackbarOn() {
         setSnackbarVisible(true);

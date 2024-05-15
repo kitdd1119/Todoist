@@ -8,7 +8,7 @@ import {
     TouchableWithoutFeedback,
     KeyboardAvoidingView,
 } from "react-native";
-import { schedule } from "../../util/http";
+import { sendSchedule } from "../../util/http";
 
 function ScheduleInput(props) {
     const [enteredScheduleText, setEnteredScheduleText] = useState('');
@@ -19,7 +19,8 @@ function ScheduleInput(props) {
     }
 
     function addScheduleHandler() {
-        schedule(enteredScheduleText);
+        // DB 로 일정 값 보내기
+        sendSchedule(enteredScheduleText);
         props.onAddSchedule(enteredScheduleText);
         setEnteredScheduleText('');
     }
