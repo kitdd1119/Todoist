@@ -14,6 +14,7 @@ function TodayScreen({ courseSchedules, setCourseSchedules }) {
     useEffect(() => {
         async function getSchedules() {
             const schedules = await fetchSchedule();
+            setCourseSchedules((currentCourseSchedules) => [...currentCourseSchedules, ...schedules]);
         }
         getSchedules();
     }, []);

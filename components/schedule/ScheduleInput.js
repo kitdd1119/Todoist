@@ -18,9 +18,9 @@ function ScheduleInput(props) {
         setEnteredScheduleText(enteredSchedule);
     }
 
-    function addScheduleHandler() {
+    async function addScheduleHandler() {
         // DB 로 일정 값 보내기
-        sendSchedule(enteredScheduleText);
+        await sendSchedule(enteredScheduleText);
         props.onAddSchedule(enteredScheduleText);
         setEnteredScheduleText('');
     }
