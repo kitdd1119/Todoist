@@ -4,8 +4,15 @@ const DB_URL = 'url값';
 
 export function sendSchedule(enteredScheduleText) {
     axios.post(
-        DB_URL + '/파일 명', enteredScheduleText
+        // 추가한 일정마다 각각의 DB 생성
+        DB_URL + `/todolist/${enteredScheduleText}.json`, enteredScheduleText
         // 만약에 객체로 전달해야 한다면 { scheduleText: enteredScheduleText } 로 바꿔 json 형식으로 전달
+    );
+}
+
+export async function deleteSchedule(id) {
+    axios.delete(
+        DB_URL + `/todolist/${id}.json`
     );
 }
 

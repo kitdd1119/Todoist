@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 
 import AddScheduleList from "../components/schedule/AddScheduleList";
-import { fetchSchedule } from "../util/http";
+import { deleteSchedule, fetchSchedule } from "../util/http";
 
 function TodayScreen({ courseSchedules, setCourseSchedules }) {
     const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -27,9 +27,11 @@ function TodayScreen({ courseSchedules, setCourseSchedules }) {
         setSnackbarVisible(false);
     }
 
-    function deleteScheduleHandler(id) {
+    async function deleteScheduleHandler(id) {
         const scheduleToDelete = courseSchedules.find(schedule => schedule.id === id);
         if (scheduleToDelete) {
+            // DB에서 해당 id 삭제
+            await deleteSchedule(scheduleToDelete);
             setDeletedSchedule(scheduleToDelete);
             setCourseSchedules((currentCourseSchedules) => {
                 return currentCourseSchedules.filter((schedule) => schedule.id !== id);
