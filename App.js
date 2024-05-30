@@ -13,6 +13,7 @@ import Colors from './constants/colors';
 import ScheduleInput from './components/schedule/ScheduleInput';
 import ScheduleAddButton from './components/schedule/ScheduleAddButton';
 import TopOption from './components/topOption/TopOption';
+import ScheduleInformation from './screens/ScheduleInformation';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -177,12 +178,19 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style='dark' />
+      <StatusBar style='transition' />
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             name='MainOverview'
             component={MainOverview}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name='ScheduleInformation'
+            component={ScheduleInformation}
             options={{
               headerShown: false
             }}

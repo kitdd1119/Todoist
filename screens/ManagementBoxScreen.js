@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 
 import AddScheduleList from "../components/schedule/AddScheduleList";
@@ -38,7 +37,7 @@ function ManagementBoxScreen({ courseSchedules, setCourseSchedules }) {
     }
 
     return (
-        <SafeAreaView style={styles.screen}>
+        <>
             <View style={styles.container}>
                 <View style={styles.topNavigation}>
                     <Text style={styles.text}>관리함</Text>
@@ -74,16 +73,13 @@ function ManagementBoxScreen({ courseSchedules, setCourseSchedules }) {
                     </TouchableOpacity>
                 </View>
             </Snackbar>
-        </SafeAreaView>
+        </>
     )
 }
 
 export default ManagementBoxScreen;
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-    },
     container: {
         flex: 1,
         backgroundColor: 'white',

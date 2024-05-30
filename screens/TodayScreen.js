@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 
 import AddScheduleList from "../components/schedule/AddScheduleList";
 import { deleteSchedule, fetchSchedule } from "../util/http";
+import { SafeAreaView } from "react-native-safe-area-context";
+// SateAreaView 사용 시 안드로이드는 react-native-safe-area-context로 사용하고
+// ios는 react-native로 사용하도록 해야 할 듯.
 
 function TodayScreen({ courseSchedules, setCourseSchedules }) {
     const [snackbarVisible, setSnackbarVisible] = useState(false);

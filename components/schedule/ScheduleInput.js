@@ -20,6 +20,7 @@ function ScheduleInput(props) {
 
     async function addScheduleHandler() {
         // DB 로 일정 값 보내기
+        // app.js에서 일정 값을 보내야 할 수도 있음.
         await sendSchedule(enteredScheduleText);
         props.onAddSchedule(enteredScheduleText);
         setEnteredScheduleText('');
