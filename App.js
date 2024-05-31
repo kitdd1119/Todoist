@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, Platform, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,6 +14,7 @@ import ScheduleInput from './components/schedule/ScheduleInput';
 import ScheduleAddButton from './components/schedule/ScheduleAddButton';
 import TopOption from './components/topOption/TopOption';
 import ScheduleInformation from './screens/ScheduleInformation';
+import SafeAreaView from './components/SafeAreaView/SafeAreaView';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -63,7 +64,7 @@ function MainOverview() {
         }}
       >
         {() => (
-          <>
+          <SafeAreaView style={styles.screen}>
             <View style={styles.TopOption}>
               <TopOption todayScreen={true} />
             </View>
@@ -77,7 +78,7 @@ function MainOverview() {
               offSchedule={endScheduleAddButtonHandler}
             />
             <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
-          </>
+          </SafeAreaView>
         )}
       </BottomTab.Screen>
       <BottomTab.Screen
@@ -96,7 +97,7 @@ function MainOverview() {
         }}
       >
         {() => (
-          <>
+          <SafeAreaView style={styles.screen}>
             <View style={styles.TopOption}>
               <TopOption todayScreen={false} />
             </View>
@@ -110,7 +111,7 @@ function MainOverview() {
               offSchedule={endScheduleAddButtonHandler}
             />
             <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
-          </>
+          </SafeAreaView>
         )}
       </BottomTab.Screen>
       <BottomTab.Screen
@@ -129,7 +130,7 @@ function MainOverview() {
         }}
       >
         {() => (
-          <>
+          <SafeAreaView style={styles.screen}>
             <SearchScreen
               courseSchedules={courseSchedules}
               setCourseSchedules={setCourseSchedules}
@@ -140,7 +141,7 @@ function MainOverview() {
               offSchedule={endScheduleAddButtonHandler}
             />
             <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
-          </>
+          </SafeAreaView>
         )}
       </BottomTab.Screen>
       <BottomTab.Screen
@@ -159,7 +160,7 @@ function MainOverview() {
         }}
       >
         {() => (
-          <>
+          <SafeAreaView style={styles.screen}>
             <ListScreen />
             <ScheduleInput
               visible={modalIsVisible}
@@ -167,7 +168,7 @@ function MainOverview() {
               offSchedule={endScheduleAddButtonHandler}
             />
             <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
-          </>
+          </SafeAreaView>
         )}
       </BottomTab.Screen>
     </BottomTab.Navigator>
@@ -178,7 +179,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style='transition' />
+      <StatusBar style='black' />
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -188,7 +189,7 @@ export default function App() {
               headerShown: false
             }}
           />
-          <Stack.Screen 
+          <Stack.Screen
             name='ScheduleInformation'
             component={ScheduleInformation}
             options={{
@@ -202,9 +203,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   TopOption: {
     position: 'absolute',
-    top: 32,
+    top: Platform.OS === 'android' ? 32 : 64,
     right: 10,
     zIndex: 1,
   },

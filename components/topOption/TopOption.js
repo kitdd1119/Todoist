@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Linking, StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { Linking, StyleSheet, TouchableOpacity, View, Text, TouchableWithoutFeedback } from "react-native";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Menu, Snackbar, PaperProvider } from "react-native-paper"
 // import Clipboard from "@react-native-clipboard/clipboard";
@@ -26,6 +26,12 @@ function TopOption({ todayScreen }) {
         setSnackbarVisible(false);
     }
 
+    function menuOffHandler() {
+        if (menuVisible) {
+            menuOff();
+        }
+    }
+
     // 링크 복사 기능은 웹에서 구현되는데 앱에서는 에러 뜨는 듯함.
     // 기능적으로는 구현이 되는 것 같으니 다른 기능 추가하고 나중에 오류 해결 해야 할 듯함.
 
@@ -47,6 +53,7 @@ function TopOption({ todayScreen }) {
 
     return (
         <PaperProvider>
+            <TouchableWithoutFeedback onPress={menuOffHandler}>
             <View style={styles.screen}>
                 <Menu
                     visible={menuVisible}
@@ -92,6 +99,7 @@ function TopOption({ todayScreen }) {
                     </View>
                 </Snackbar>
             </View>
+            </TouchableWithoutFeedback>
         </PaperProvider>
     )
 }

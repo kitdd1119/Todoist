@@ -28,7 +28,9 @@ function AddScheduleList(props) {
                         style={({ pressed }) => pressed && styles.pressedSchedule}
                         onPress={props.onDeleteSchedule.bind(this, props.id)}
                     >
-                        <Text style={styles.deleteScheduleButton}></Text>
+                        <View style={styles.deleteScheduleButton}>
+                            <Text></Text>
+                        </View>
                     </Pressable>
                 </View>
                 <View style={styles.scheduleData}>

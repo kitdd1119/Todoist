@@ -14,7 +14,7 @@ function ScheduleAddButton(props) {
 
     return (
         <TouchableOpacity onPress={startScheduleAddButtonHandler} style={styles.scheduleButtonContainer}>
-            <AntDesign name="pluscircle" size={40} color={Colors.mainColor} />
+            <AntDesign name="pluscircle" size={60} color={Colors.mainColor} />
         </TouchableOpacity>
     );
 }
@@ -24,7 +24,7 @@ export default ScheduleAddButton;
 const styles = StyleSheet.create({
     scheduleButtonContainer: {
         position: 'absolute',
-        bottom: 60,
-        right: 10,
+        bottom: 15,
+        right: 15,
     },
 });
