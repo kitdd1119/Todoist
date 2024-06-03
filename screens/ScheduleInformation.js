@@ -1,16 +1,31 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-function ScheduleInformation() {
+import EditSchedule from "../components/ScheduleInformation/EditSchedule";
+import SafeAreaView from "../components/SafeAreaView/SafeAreaView";
+
+function ScheduleInformation({ navigation }) {
+    function cancelHandler() {
+        navigation.goBack();
+    }
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>asd</Text>
-        </View>
+        <SafeAreaView style={styles.screen}>
+            <View style={styles.container}>
+                <EditSchedule
+                    onCancel={cancelHandler}
+                />
+            </View>
+        </SafeAreaView>
     )
 }
 
 export default ScheduleInformation;
 
 const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
     container: {
         flex: 1,
     },

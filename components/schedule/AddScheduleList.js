@@ -1,23 +1,13 @@
 import { View, Text, StyleSheet, Pressable, TouchableOpacity } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
-// import Calendars from "../calendar/Calendars";
 
 function AddScheduleList(props) {
     const navigation = useNavigation();
-    // const [calendarSelected, setCalendarSelected] = useState('');
 
     function onScheduleInformationHandler() {
         navigation.navigate('ScheduleInformation');
     }
-
-    // function offCalendarHandler() {
-    //     setModalIsVisible(false);
-    // }
-
-    // function handleDayPress(day) {
-    //     setCalendarSelected(day.dateString);
-    // }
 
     return (
         <TouchableOpacity onPress={onScheduleInformationHandler}>
@@ -37,12 +27,6 @@ function AddScheduleList(props) {
                     <Text style={styles.schedule}>{props.text}</Text>
                 </View>
             </View>
-            {/* <Calendars 
-                visible={modalIsVisible}
-                selectedDate={calendarSelected}
-                onDayPress={handleDayPress}
-                offCalender={offCalendarHandler}
-            /> */}
         </TouchableOpacity>
     )
 }

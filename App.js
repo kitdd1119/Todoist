@@ -160,7 +160,7 @@ function MainOverview() {
         }}
       >
         {() => (
-          <SafeAreaView style={styles.screen}>
+          <SafeAreaView style={styles.screen2}>
             <ListScreen />
             <ScheduleInput
               visible={modalIsVisible}
@@ -193,7 +193,8 @@ export default function App() {
             name='ScheduleInformation'
             component={ScheduleInformation}
             options={{
-              headerShown: false
+              headerShown: false,
+              presentation: 'modal',
             }}
           />
         </Stack.Navigator>
@@ -205,6 +206,11 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: 'white',
+  },
+  screen2: {
+    flex: 1,
+    backgroundColor: '#f9f9f2',
   },
   TopOption: {
     position: 'absolute',

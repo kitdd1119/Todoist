@@ -10,7 +10,7 @@ function Calendars(props) {
     }
 
     return (
-        // <Modal visible={props.visible} animationType="slide">
+        <Modal visible={props.visible} animationType="slide">
             <TouchableWithoutFeedback onPress={offCalendarHandler}>
                 <View style={styles.modalOverlay}>
                     <Calendar
@@ -23,7 +23,7 @@ function Calendars(props) {
                     />
                 </View>
             </TouchableWithoutFeedback>
-        // </Modal>
+        </Modal>
     )
 }
 
