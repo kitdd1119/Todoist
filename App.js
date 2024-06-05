@@ -39,139 +39,126 @@ function MainOverview() {
   }
 
   return (
-    <BottomTab.Navigator
-      screenOptions={{
-        tabBarStyle: {
-          backgroundColor: '#f9f9f2',
-          borderTopWidth: 0,
-        },
-        tabBarActiveTintColor: Colors.mainColor,
-      }}
-    >
-      <BottomTab.Screen
-        name="오늘 화면"
-        options={{
-          headerShown: false,
-          tabBarLabel: '오늘',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={focused
-                ? require('./assets/BottomTab/Today2.png')
-                : require('./assets/BottomTab/Today.png')}
-              style={{ width: 25, height: 25 }}
-            />
-          )
+    <>
+      <BottomTab.Navigator
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: '#f9f9f2',
+            borderTopWidth: 0,
+          },
+          tabBarActiveTintColor: Colors.mainColor,
         }}
       >
-        {() => (
-          <SafeAreaView style={styles.screen}>
-            <View style={styles.TopOption}>
-              <TopOption todayScreen={true} />
-            </View>
-            <TodayScreen
-              courseSchedules={courseSchedules}
-              setCourseSchedules={setCourseSchedules}
-            />
-            <ScheduleInput
-              visible={modalIsVisible}
-              onAddSchedule={addScheduleHandler}
-              offSchedule={endScheduleAddButtonHandler}
-            />
-            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
-          </SafeAreaView>
-        )}
-      </BottomTab.Screen>
-      <BottomTab.Screen
-        name="관리함 화면"
-        options={{
-          headerShown: false,
-          tabBarLabel: '관리함',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={focused
-                ? require('./assets/BottomTab/ManagementBox2.png')
-                : require('./assets/BottomTab/ManagementBox.png')}
-              style={{ width: 25, height: 25 }}
-            />
-          )
-        }}
-      >
-        {() => (
-          <SafeAreaView style={styles.screen}>
-            <View style={styles.TopOption}>
-              <TopOption todayScreen={false} />
-            </View>
-            <ManagementBoxScreen
-              courseSchedules={courseSchedules}
-              setCourseSchedules={setCourseSchedules}
-            />
-            <ScheduleInput
-              visible={modalIsVisible}
-              onAddSchedule={addScheduleHandler}
-              offSchedule={endScheduleAddButtonHandler}
-            />
-            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
-          </SafeAreaView>
-        )}
-      </BottomTab.Screen>
-      <BottomTab.Screen
-        name="검색 화면"
-        options={{
-          headerShown: false,
-          tabBarLabel: '검색',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={focused
-                ? require('./assets/BottomTab/Search2.png')
-                : require('./assets/BottomTab/Search.png')}
-              style={{ width: 25, height: 25 }}
-            />
-          )
-        }}
-      >
-        {() => (
-          <SafeAreaView style={styles.screen}>
-            <SearchScreen
-              courseSchedules={courseSchedules}
-              setCourseSchedules={setCourseSchedules}
-            />
-            <ScheduleInput
-              visible={modalIsVisible}
-              onAddSchedule={addScheduleHandler}
-              offSchedule={endScheduleAddButtonHandler}
-            />
-            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
-          </SafeAreaView>
-        )}
-      </BottomTab.Screen>
-      <BottomTab.Screen
-        name="목록 화면"
-        options={{
-          headerShown: false,
-          tabBarLabel: '목록',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={focused
-                ? require('./assets/BottomTab/List2.png')
-                : require('./assets/BottomTab/List.png')}
-              style={{ width: 25, height: 25 }}
-            />
-          )
-        }}
-      >
-        {() => (
-          <SafeAreaView style={styles.screen2}>
-            <ListScreen />
-            <ScheduleInput
-              visible={modalIsVisible}
-              onAddSchedule={addScheduleHandler}
-              offSchedule={endScheduleAddButtonHandler}
-            />
-            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
-          </SafeAreaView>
-        )}
-      </BottomTab.Screen>
-    </BottomTab.Navigator>
+        <BottomTab.Screen
+          name="오늘 화면"
+          options={{
+            headerShown: false,
+            tabBarLabel: '오늘',
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused
+                  ? require('./assets/BottomTab/Today2.png')
+                  : require('./assets/BottomTab/Today.png')}
+                style={{ width: 25, height: 25 }}
+              />
+            )
+          }}
+        >
+          {() => (
+            <SafeAreaView style={styles.screen}>
+              <View style={styles.TopOption}>
+                <TopOption todayScreen={true} />
+              </View>
+              <TodayScreen
+                courseSchedules={courseSchedules}
+                setCourseSchedules={setCourseSchedules}
+              />
+              <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+            </SafeAreaView>
+          )}
+        </BottomTab.Screen>
+        <BottomTab.Screen
+          name="관리함 화면"
+          options={{
+            headerShown: false,
+            tabBarLabel: '관리함',
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused
+                  ? require('./assets/BottomTab/ManagementBox2.png')
+                  : require('./assets/BottomTab/ManagementBox.png')}
+                style={{ width: 25, height: 25 }}
+              />
+            )
+          }}
+        >
+          {() => (
+            <SafeAreaView style={styles.screen}>
+              <View style={styles.TopOption}>
+                <TopOption todayScreen={false} />
+              </View>
+              <ManagementBoxScreen
+                courseSchedules={courseSchedules}
+                setCourseSchedules={setCourseSchedules}
+              />
+              <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+            </SafeAreaView>
+          )}
+        </BottomTab.Screen>
+        <BottomTab.Screen
+          name="검색 화면"
+          options={{
+            headerShown: false,
+            tabBarLabel: '검색',
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused
+                  ? require('./assets/BottomTab/Search2.png')
+                  : require('./assets/BottomTab/Search.png')}
+                style={{ width: 25, height: 25 }}
+              />
+            )
+          }}
+        >
+          {() => (
+            <SafeAreaView style={styles.screen}>
+              <SearchScreen
+                courseSchedules={courseSchedules}
+                setCourseSchedules={setCourseSchedules}
+              />
+              <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+            </SafeAreaView>
+          )}
+        </BottomTab.Screen>
+        <BottomTab.Screen
+          name="목록 화면"
+          options={{
+            headerShown: false,
+            tabBarLabel: '목록',
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused
+                  ? require('./assets/BottomTab/List2.png')
+                  : require('./assets/BottomTab/List.png')}
+                style={{ width: 25, height: 25 }}
+              />
+            )
+          }}
+        >
+          {() => (
+            <SafeAreaView style={styles.screen2}>
+              <ListScreen />
+              <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+            </SafeAreaView>
+          )}
+        </BottomTab.Screen>
+      </BottomTab.Navigator>
+      <ScheduleInput
+        visible={modalIsVisible}
+        onAddSchedule={addScheduleHandler}
+        offSchedule={endScheduleAddButtonHandler}
+      />
+    </>
   )
 }
 

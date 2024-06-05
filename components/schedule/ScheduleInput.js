@@ -10,6 +10,7 @@ import {
     KeyboardAvoidingView,
     Platform,
     TouchableOpacity,
+    ScrollView,
 } from "react-native";
 import { sendSchedule } from "../../util/http";
 
@@ -58,12 +59,17 @@ function ScheduleInput(props) {
     const isInputEmpty = enteredScheduleText.trim().length === 0;
 
     return (
-        <Modal visible={props.visible} animationType="slide" transparent={true}>
+        <Modal
+            visible={props.visible}
+            animationType="slide"
+            transparent={true}
+        >
             <TouchableWithoutFeedback onPress={endScheduleAddButtonHandler}>
                 <View style={styles.modalOverlay}>
                     <KeyboardAvoidingView
                         style={styles.container}
-                        behavior={Platform.OS === "ios" ? "padding" : "height"}
+                        behavior={Platform.OS === 'ios' ? 'padding' : null}
+                    // 키보드가 올라올 때 키보드 영역까지 백그라운드 입힐 수 있도록.
                     >
                         <View style={styles.modalContainer}>
                             <TouchableWithoutFeedback>
@@ -83,20 +89,22 @@ function ScheduleInput(props) {
                                         placeholderTextColor="silver"
                                         keyboardAppearance="light"
                                     />
-                                    <View style={styles.buttonContainer}>
-                                        <TouchableOpacity style={styles.button}>
-                                            <Text>오늘</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.button}>
-                                            <Text>우선 순위</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.button}>
-                                            <Text>미리 알림</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.button}>
-                                            <Text>더보기</Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                        <View style={styles.buttonContainer}>
+                                            <TouchableOpacity style={styles.button}>
+                                                <Text>오늘</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.button}>
+                                                <Text>우선 순위</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.button}>
+                                                <Text>미리 알림</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.button}>
+                                                <Text>더보기</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </ScrollView>
                                     <View style={styles.buttonContainer2}>
                                         <TouchableOpacity style={styles.button}>
                                             <Text>관리함</Text>
@@ -125,7 +133,7 @@ const styles = StyleSheet.create({
     },
     modalOverlay: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
     modalContainer: {
         marginTop: 'auto',
@@ -149,11 +157,11 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        borderBottomWidth: 1,
-        borderColor: 'silver'
     },
     button: {
+        marginTop: 10,
+        marginLeft: 20,
+        marginRight: 12,
         marginBottom: 12,
         padding: 6,
         borderWidth: 1,
@@ -162,6 +170,8 @@ const styles = StyleSheet.create({
     buttonContainer2: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 12
+        marginVertical: 12,
+        borderTopWidth: 1,
+        borderColor: 'silver'
     }
 });
