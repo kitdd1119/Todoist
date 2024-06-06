@@ -15,6 +15,7 @@ import ScheduleAddButton from './components/schedule/ScheduleAddButton';
 import TopOption from './components/topOption/TopOption';
 import ScheduleInformation from './screens/ScheduleInformation';
 import SafeAreaView from './components/SafeAreaView/SafeAreaView';
+import Productivity from './components/ListScreen/Productivity';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -179,6 +180,14 @@ export default function App() {
           <Stack.Screen
             name='ScheduleInformation'
             component={ScheduleInformation}
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
+          <Stack.Screen
+            name='Productivity'
+            component={Productivity}
             options={{
               headerShown: false,
               presentation: 'modal',

@@ -3,15 +3,21 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
 import Colors from "../constants/colors";
 
 function ListScreen() {
+    const navigation = useNavigation();
+
+    function ProductivityHandler() {
+        navigation.navigate('Productivity');
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.topButton}>
-                <TouchableOpacity style={styles.user}>
+                <TouchableOpacity onPress={ProductivityHandler} style={styles.user}>
                     <AntDesign name="user" size={24} color={Colors.mainColor} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.bell}>
@@ -22,13 +28,15 @@ function ListScreen() {
                 </TouchableOpacity>
             </View>
             <View style={styles.list1}>
-                <TouchableOpacity style={styles.listOption1}>
-                    <View style={styles.list1next}>
-                        <AntDesign name="calendar" size={24} color={Colors.mainColor} />
-                        <Text style={styles.listOption1Text}>다음</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.listOption2}>
+                <View style={styles.listOption1}>
+                    <TouchableOpacity>
+                        <View style={styles.list1next}>
+                            <AntDesign name="calendar" size={24} color={Colors.mainColor} />
+                            <Text style={styles.listOption1Text}>다음</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity>
                     <View style={styles.list2next}>
                         <Image source={require('../assets/BottomTab/filter_label.png')} style={{ width: 24, height: 24 }} />
                         <Text style={styles.listOption1Text}>필터 & 라벨</Text>
@@ -49,14 +57,16 @@ function ListScreen() {
             </View>
             <View>
                 <View style={styles.list1}>
-                    <TouchableOpacity style={styles.listOption1}>
-                        <View style={styles.list1next}>
-                            <Feather name="hash" size={24} color="gray" />
-                            <Text style={styles.listOption1Text}>자택</Text>
-                            <Feather name="home" size={24} color="black" />
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.listOption2}>
+                    <View style={styles.listOption1}>
+                        <TouchableOpacity>
+                            <View style={styles.list1next}>
+                                <Feather name="hash" size={24} color="gray" />
+                                <Text style={styles.listOption1Text}>자택</Text>
+                                <Feather name="home" size={24} color="black" />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity>
                         <View style={styles.list2next}>
                             <SimpleLineIcons name="pencil" size={24} color="gray" />
                             <Text style={styles.listOption1Text}>프로젝트 관리</Text>
