@@ -1,8 +1,6 @@
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Feather } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { Feather, AntDesign, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
+
 import { useNavigation } from "@react-navigation/native";
 
 import Colors from "../constants/colors";
@@ -14,16 +12,28 @@ function ListScreen() {
         navigation.navigate('Productivity');
     }
 
+    function AlarmHandler() {
+        navigation.navigate('Alarm');
+    }
+
+    function SettingHandler() {
+        navigation.navigate('Setting');
+    }
+
+    function ProjectHandler() {
+        navigation.navigate('Project');
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.topButton}>
                 <TouchableOpacity onPress={ProductivityHandler} style={styles.user}>
                     <AntDesign name="user" size={24} color={Colors.mainColor} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.bell}>
+                <TouchableOpacity onPress={AlarmHandler} style={styles.bell}>
                     <Feather name="bell" size={24} color={Colors.mainColor} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.setting}>
+                <TouchableOpacity onPress={SettingHandler} style={styles.setting}>
                     <Ionicons name="settings-outline" size={24} color={Colors.mainColor} />
                 </TouchableOpacity>
             </View>
@@ -44,7 +54,7 @@ function ListScreen() {
                 </TouchableOpacity>
             </View>
             <View style={styles.projectButton}>
-                <TouchableOpacity style={styles.user}>
+                <TouchableOpacity onPress={ProjectHandler} style={styles.user}>
                     <Text>프로젝트</Text>
                     <AntDesign name="right" size={10} color="black" />
                 </TouchableOpacity>
@@ -66,7 +76,7 @@ function ListScreen() {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={ProjectHandler}>
                         <View style={styles.list2next}>
                             <SimpleLineIcons name="pencil" size={24} color="gray" />
                             <Text style={styles.listOption1Text}>프로젝트 관리</Text>

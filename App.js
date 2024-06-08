@@ -16,6 +16,9 @@ import TopOption from './components/topOption/TopOption';
 import ScheduleInformation from './screens/ScheduleInformation';
 import SafeAreaView from './components/SafeAreaView/SafeAreaView';
 import Productivity from './components/ListScreen/Productivity';
+import Alarm from './components/ListScreen/Alarm';
+import Setting from './components/ListScreen/Setting';
+import Project from './components/ListScreen/Project';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -193,6 +196,30 @@ export default function App() {
               presentation: 'modal',
             }}
           />
+          <Stack.Screen
+            name='Alarm'
+            component={Alarm}
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
+          <Stack.Screen
+            name='Setting'
+            component={Setting}
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
+          <Stack.Screen
+            name='Project'
+            component={Project}
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
@@ -210,7 +237,7 @@ const styles = StyleSheet.create({
   },
   TopOption: {
     position: 'absolute',
-    top: Platform.OS === 'android' ? 32 : 64,
+    top: Platform.OS === 'android' ? 48 : 64,
     right: 10,
     zIndex: 1,
   },

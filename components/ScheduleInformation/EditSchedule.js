@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { MaterialIcons, AntDesign, SimpleLineIcons } from '@expo/vector-icons';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { MaterialIcons, AntDesign, SimpleLineIcons, Entypo, Octicons, FontAwesome } from '@expo/vector-icons';
 
 import Calendars from "./Calendars";
 
@@ -52,23 +52,23 @@ function EditSchedule({ onCancel }) {
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <View style={styles.functionButtonContainer}>
                         <TouchableOpacity style={styles.functionButton}>
-                            <AntDesign name="USB" size={24} />
+                            <MaterialIcons name="label" size={24} />
                             <Text style={styles.functionButtonText}>라벨</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.functionButton}>
-                            <AntDesign name="USB" size={24} />
+                            <Entypo name="stopwatch" size={24} />
                             <Text style={styles.functionButtonText}>미리 알림</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.functionButton}>
-                            <AntDesign name="USB" size={24} />
+                            <Octicons name="location" size={24} />
                             <Text style={styles.functionButtonText}>위치</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.functionButton}>
-                            <AntDesign name="USB" size={24} />
+                            <Entypo name="text" size={24} />
                             <Text style={styles.functionButtonText}>설명</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.functionButton}>
-                            <AntDesign name="USB" size={24} />
+                            <FontAwesome name="indent" size={24} />
                             <Text style={styles.functionButtonText}>이동</Text>
                         </TouchableOpacity>
                     </View>
@@ -89,10 +89,9 @@ function EditSchedule({ onCancel }) {
                 <TouchableOpacity style={styles.commentInput}>
                     <Text>댓글</Text>
                     <TouchableOpacity>
-                        <AntDesign name="USB" size={20} />
+                        <SimpleLineIcons name="paper-clip" size={20} />
                     </TouchableOpacity>
                 </TouchableOpacity>
-
             </View>
         </ScrollView>
     )
@@ -146,6 +145,7 @@ const styles = StyleSheet.create({
     },
     functionButton: {
         flexDirection: 'row',
+        alignItems: 'center',
         borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 6,

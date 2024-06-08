@@ -6,15 +6,19 @@ import Colors from "../../constants/colors";
 import SafeAreaView from '../SafeAreaView/SafeAreaView';
 
 const screenWidth = Dimensions.get('window').width;
-const barWidth = screenWidth * 0.9 / 3; // 3개의 막대 너비를 계산
+// 화면의 너비를 가져옮.
+const barWidth = screenWidth * 0.9 / 3; // 전체 화면의 90%를 사용하여 3개의 막대 너비로 나눠 계산
 
 function Productivity({ navigation }) {
     const animation = useRef(new Animated.Value(0)).current;
+    // 애니메이션 초기값을 0으로 설정하고 useRef는 current(속성) 객체를 반환.
 
     const handlePress = (index) => {
+        // Animated.spring을 사용해 애니메이션 시작
         Animated.spring(animation, {
             toValue: index * barWidth, // 각 인덱스에 대한 x 위치 계산
-            useNativeDriver: false, // layout properties such as left or top are not supported with useNativeDriver
+            useNativeDriver: false, 
+            // 레이아웃 속성을 애니메이션화하고 레이아웃 속성(left, top)은 useNativeDriver와 함께 사용할 수 없음
         }).start();
     };
 
@@ -46,6 +50,7 @@ function Productivity({ navigation }) {
             <View style={styles.container}>
                 <View style={styles.barContainer}>
                     <Animated.View style={[styles.background, { transform: [{ translateX: animation }] }]} />
+                    {/* Animated.View의 transform 속성에 translateX를 사용하여 animation 값을 직접 설정 */}
                     <TouchableOpacity style={styles.bar} onPress={() => handlePress(0)}>
                         <Text style={styles.barText}>일일</Text>
                     </TouchableOpacity>
@@ -68,7 +73,8 @@ export default Productivity;
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1
+        flex: 1,
+        backgroundColor: 'white',
     },
     topContainer: {
         flexDirection: 'row',
@@ -89,6 +95,7 @@ const styles = StyleSheet.create({
     activityInfo: {
         right: 100,
     },
+
     // 이 아래로는 일일, 주간, Karma 버튼 스타일
     container: {
         justifyContent: 'center',
@@ -99,6 +106,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         height: 30,
         borderRadius: 5,
+        padding: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
     },
     background: {
