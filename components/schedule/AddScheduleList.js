@@ -6,7 +6,7 @@ function AddScheduleList(props) {
     const navigation = useNavigation();
 
     function onScheduleInformationHandler() {
-        navigation.navigate('ScheduleInformation');
+        navigation.navigate('ScheduleInformation', { text: props.text });
     }
 
     return (

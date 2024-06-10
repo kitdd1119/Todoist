@@ -9,8 +9,9 @@ function Setting({ navigation }) {
     }
 
     return (
-        <ScrollView style={styles.screen}>
-            <SafeAreaView style={styles.screen}>
+        <SafeAreaView style={styles.screen}>
+            <ScrollView style={styles.screen}>
+
                 <View style={styles.topContainer}>
                     <View style={styles.topTextView}>
                         <Text style={[styles.text, { fontWeight: 'bold' }]}>설정</Text>
@@ -106,8 +107,8 @@ function Setting({ navigation }) {
                     </View>
                     <Text>로그인 계정: { }</Text>
                 </View>
-            </SafeAreaView>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 

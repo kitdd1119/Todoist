@@ -1,9 +1,13 @@
 import { StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 import EditSchedule from "../components/ScheduleInformation/EditSchedule";
 import SafeAreaView from "../components/SafeAreaView/SafeAreaView";
 
 function ScheduleInformation({ navigation }) {
+    const route = useRoute();
+    const { text } = route.params;
+
     function cancelHandler() {
         navigation.goBack();
     }
@@ -13,6 +17,7 @@ function ScheduleInformation({ navigation }) {
             <View style={styles.container}>
                 <EditSchedule
                     onCancel={cancelHandler}
+                    text={text}
                 />
             </View>
         </SafeAreaView>

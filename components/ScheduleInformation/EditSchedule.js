@@ -4,7 +4,7 @@ import { MaterialIcons, AntDesign, SimpleLineIcons, Entypo, Octicons, FontAwesom
 
 import Calendars from "./Calendars";
 
-function EditSchedule({ onCancel }) {
+function EditSchedule({ onCancel, text }) {
     const [modalIsVisible, setModalIsVisible] = useState('');
     const [calendarSelected, setCalendarSelected] = useState('');
 
@@ -39,7 +39,7 @@ function EditSchedule({ onCancel }) {
                     </View>
                 </View>
                 <View>
-                    <Text style={styles.scheduleTitle}>일정 제목</Text>
+                    <Text style={styles.scheduleTitle}>{text}</Text>
                 </View>
                 <TouchableOpacity onPress={onCalendarHandler}>
                     <View style={styles.calendarButton}>
