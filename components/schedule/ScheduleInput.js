@@ -6,11 +6,12 @@ import {
     View,
     Text,
     Button,
-    TouchableWithoutFeedback,
     KeyboardAvoidingView,
     Platform,
     TouchableOpacity,
     ScrollView,
+    TouchableWithoutFeedback,
+    Keyboard,
 } from "react-native";
 import { sendSchedule } from "../../util/http";
 
@@ -45,7 +46,6 @@ function ScheduleInput(props) {
 
     async function addScheduleHandler() {
         // DB 로 일정 값 보내기
-        // app.js에서 일정 값을 보내야 할 수도 있음.
         await sendSchedule(enteredScheduleText);
         props.onAddSchedule(enteredScheduleText);
         setEnteredScheduleText('');
@@ -68,60 +68,61 @@ function ScheduleInput(props) {
                 <View style={styles.modalOverlay}>
                     <KeyboardAvoidingView
                         style={styles.container}
-                        behavior={Platform.OS === 'ios' ? 'padding' : null}
-                    // 키보드가 올라올 때 키보드 영역까지 백그라운드 입힐 수 있도록.
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // 키보드가 올라올 때 키보드 영역까지 백그라운드 입힐 수 있도록.
                     >
-                        <View style={styles.modalContainer}>
-                            <TouchableWithoutFeedback>
-                                <View>
-                                    <TextInput
-                                        ref={inputRef}
-                                        style={styles.titleInput}
-                                        placeholder={placeholder}
-                                        placeholderTextColor="silver"
-                                        onChangeText={inputScheduleHandler}
-                                        value={enteredScheduleText}
-                                        keyboardAppearance="light"
-                                    />
-                                    <TextInput
-                                        style={styles.explanationInput}
-                                        placeholder="설명"
-                                        placeholderTextColor="silver"
-                                        keyboardAppearance="light"
-                                    />
-                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                        <View style={styles.buttonContainer}>
-                                            <TouchableOpacity style={styles.button}>
-                                                <Text>오늘</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.button}>
-                                                <Text>우선 순위</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.button}>
-                                                <Text>미리 알림</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.button}>
-                                                <Text>더보기</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </ScrollView>
-                                    <View style={styles.buttonContainer2}>
+                        <TouchableWithoutFeedback>
+                            <View style={styles.modalContainer}>
+                                <TextInput
+                                    ref={inputRef}
+                                    style={styles.titleInput}
+                                    placeholder={placeholder}
+                                    placeholderTextColor="silver"
+                                    onChangeText={inputScheduleHandler}
+                                    value={enteredScheduleText}
+                                    keyboardAppearance="light"
+                                />
+                                <TextInput
+                                    style={styles.explanationInput}
+                                    placeholder="설명"
+                                    placeholderTextColor="silver"
+                                    keyboardAppearance="light"
+                                />
+                                <ScrollView
+                                    horizontal={true}
+                                    showsHorizontalScrollIndicator={false}
+                                    keyboardShouldPersistTaps="handled"
+                                >
+                                    <View style={styles.buttonContainer}>
                                         <TouchableOpacity style={styles.button}>
-                                            <Text>관리함</Text>
+                                            <Text>오늘</Text>
                                         </TouchableOpacity>
-                                        <Button
-                                            title="일정 추가"
-                                            onPress={addScheduleHandler}
-                                            disabled={isInputEmpty}
-                                        />
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text>우선 순위</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text>미리 알림</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text>더보기</Text>
+                                        </TouchableOpacity>
                                     </View>
+                                </ScrollView>
+                                <View style={styles.buttonContainer2}>
+                                    <TouchableOpacity style={styles.button}>
+                                        <Text>관리함</Text>
+                                    </TouchableOpacity>
+                                    <Button
+                                        title="일정 추가"
+                                        onPress={addScheduleHandler}
+                                        disabled={isInputEmpty}
+                                    />
                                 </View>
-                            </TouchableWithoutFeedback>
-                        </View>
+                            </View>
+                        </TouchableWithoutFeedback>
                     </KeyboardAvoidingView>
                 </View>
-            </TouchableWithoutFeedback>
-        </Modal>
+            </TouchableWithoutFeedback >
+        </Modal >
     )
 }
 
@@ -130,17 +131,18 @@ export default ScheduleInput;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.4)', // 모달 화면 외부 배경색
     },
     modalOverlay: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        justifyContent: 'flex-end', // 하단 정렬
     },
     modalContainer: {
-        marginTop: 'auto',
-        backgroundColor: 'white',
+        backgroundColor: 'white', // 모달 화면 내부 배경색
         borderTopStartRadius: 10,
         borderTopEndRadius: 10,
         elevation: 5,
+        marginTop: 'auto'
     },
     titleInput: {
         width: '100%',
@@ -172,6 +174,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginVertical: 12,
         borderTopWidth: 1,
-        borderColor: 'silver'
+        borderColor: 'silver',
+        paddingHorizontal: 18
     }
 });
