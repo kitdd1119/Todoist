@@ -1,5 +1,15 @@
 import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Pressable } from "react-native";
-import { FontAwesome5, AntDesign } from '@expo/vector-icons';
+import {
+    FontAwesome,
+    AntDesign,
+    Ionicons,
+    MaterialCommunityIcons,
+    Feather,
+    FontAwesome6,
+    SimpleLineIcons,
+    MaterialIcons
+}
+    from '@expo/vector-icons';
 
 import Colors from "../../constants/colors";
 import SafeAreaView from "../SafeAreaView/SafeAreaView";
@@ -12,7 +22,6 @@ function Setting({ navigation }) {
     return (
         <SafeAreaView style={styles.screen}>
             <ScrollView style={styles.screen}>
-
                 <View style={styles.topContainer}>
                     <View style={styles.topTextView}>
                         <Text style={[styles.topText, { fontWeight: 'bold' }]}>설정</Text>
@@ -25,17 +34,19 @@ function Setting({ navigation }) {
                 </View>
                 <View style={styles.settingButtonContainer}>
                     <View style={styles.settingButton}>
-                        <View style={styles.settingView}>
+                        <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed}
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
-                                        <FontAwesome5 name="user-circle" size={24} color={Colors.mainColor} />
+                                        <FontAwesome name="user-circle-o" size={24} color={Colors.mainColor} />
                                     </View>
-                                    <Text style={styles.text}>계정</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.bottomWidthView}>
+                                        <Text style={styles.text}>계정</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
@@ -45,43 +56,63 @@ function Setting({ navigation }) {
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>일반</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <Ionicons name="settings-outline" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView2}>
+                                        <Text style={styles.text}>일반</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
                     </View>
                     <View style={styles.settingButton}>
-                        <View style={styles.settingView}>
+                        <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed}
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>테마</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <MaterialCommunityIcons name="palette-outline" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView}>
+                                        <Text style={styles.text}>테마</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
-                        <View style={styles.settingView}>
+                        <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed3}
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>앱 아이콘</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <AntDesign name="appstore-o" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView}>
+                                        <Text style={styles.text}>앱 아이콘</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
-                        <View style={styles.settingView}>
+                        <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed3}
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>내비게이션</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <Feather name="navigation" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView}>
+                                        <Text style={styles.text}>내비게이션</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
@@ -91,21 +122,31 @@ function Setting({ navigation }) {
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>빠른 추가</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <AntDesign name="addfile" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView2}>
+                                        <Text style={styles.text}>빠른 추가</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
                     </View>
                     <View style={styles.settingButton}>
-                        <View style={styles.settingView}>
+                        <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed}
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>생산성</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <FontAwesome6 name="arrow-up-right-from-square" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView}>
+                                        <Text style={styles.text}>생산성</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
@@ -115,8 +156,13 @@ function Setting({ navigation }) {
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>알림</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <SimpleLineIcons name="bell" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView2}>
+                                        <Text style={styles.text}>알림</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
@@ -128,43 +174,63 @@ function Setting({ navigation }) {
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>Siri</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <AntDesign name="apple-o" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView2}>
+                                        <Text style={styles.text}>Siri</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
                     </View>
                     <View style={styles.settingButton}>
-                        <View style={styles.settingView}>
+                        <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed}
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>도움말 및 피드백</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <Feather name="help-circle" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView}>
+                                        <Text style={styles.text}>도움말 및 피드백</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
-                        <View style={styles.settingView}>
+                        <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed3}
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>소개</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <AntDesign name="exclamationcircleo" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView}>
+                                        <Text style={styles.text}>소개</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
-                        <View style={styles.settingView}>
+                        <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed3}
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>새 업데이트</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <MaterialIcons name="tips-and-updates" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView}>
+                                        <Text style={styles.text}>새 업데이트</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
@@ -174,23 +240,32 @@ function Setting({ navigation }) {
                                 onPress={() => { }}
                             >
                                 <View style={styles.iconContainer}>
-                                    <Text style={styles.text}>동기화</Text>
-                                    <AntDesign name="right" size={10} color="black" />
+                                    <View style={styles.icon}>
+                                        <AntDesign name="sync" size={24} color={Colors.mainColor} />
+                                    </View>
+                                    <View style={styles.bottomWidthView2}>
+                                        <Text style={styles.text}>동기화</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </View>
                                 </View>
                             </Pressable>
                         </View>
                     </View>
-                    <View style={styles.settingButton}>
+                    <View style={styles.settingButton2}>
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed4}
                                 onPress={() => { }}
                             >
-                                <Text style={styles.text}>로그아웃</Text>
+                                <View style={styles.logoutContainer}>
+                                    <Text style={styles.logoutText}>로그아웃</Text>
+                                </View>
                             </Pressable>
                         </View>
                     </View>
-                    <Text>로그인 계정: { }</Text>
+                    <View style={styles.loginInfo}>
+                        <Text style={styles.loginInfoText}>로그인 계정: { }</Text>
+                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -223,19 +298,20 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginRight: 'auto',
     },
+    logoutText: {
+        fontSize: 18,
+        color: Colors.mainColor,
+        padding: 10,
+    },
     topText2View: {
         alignItems: 'flex-end'
     },
     iconContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 10,
-        borderBottomWidth: 0,
     },
     icon: {
-        padding: 10,
-        borderBottomWidth: 0,
-        borderBottomColor: 'white'
+        padding: 12
     },
     settingButtonContainer: {
         marginHorizontal: 10,
@@ -246,9 +322,37 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 30,
     },
-    settingView: {
+    settingButton2: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        marginBottom: 5,
+    },
+    bottomWidthView: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
         borderBottomColor: 'silver',
-        borderBottomWidth: 0.2
+        borderBottomWidth: 0.2,
+        padding: 5
+    },
+    bottomWidthView2: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 5
+    },
+    logoutContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+    },
+    loginInfo: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    loginInfoText: {
+        fontSize: 12,
+        color: 'gray'
     },
     pressed: {
         borderTopEndRadius: 10,
