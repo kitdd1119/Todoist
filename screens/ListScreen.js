@@ -17,7 +17,9 @@ function ListScreen() {
     }
 
     function SettingHandler() {
-        navigation.navigate('Setting');
+        navigation.navigate('SettingView', {
+            screen: 'Setting',
+        });
     }
 
     function ProjectHandler() {
@@ -93,6 +95,7 @@ export default ListScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#f9f9f2',
     },
     topButton: {
         flexDirection: 'row',

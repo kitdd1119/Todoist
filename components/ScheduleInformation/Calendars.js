@@ -7,13 +7,7 @@ import { Modalize } from "react-native-modalize";
 import SafeAreaView from "../SafeAreaView/SafeAreaView";
 
 function Calendars(props) {
-    const [calendarSelected, setCalendarSelected] = useState('');
     const modalizeRef = useRef(null);
-
-    function offCalendarHandler() {
-        props.offCalender();
-        modalizeRef.current?.close();
-    }
 
     useEffect(() => {
         if (props.visible) {
@@ -27,20 +21,21 @@ function Calendars(props) {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Modalize
                 ref={modalizeRef}
-                snapPoint={300}
-                onOverlayPress={offCalendarHandler}
+                snapPoint={600}
+                onClose={props.offCalendar}
                 modalStyle={styles.modalStyle}
+                overlayStyle={styles.overlayStyle}
+                withHandle={true}
+                handleStyle={{ marginTop: 20, backgroundColor: 'silver' }}
+                closeOnOverlayTap={true}
             >
                 <SafeAreaView style={styles.screen}>
-                    <TouchableWithoutFeedback onPress={offCalendarHandler}>
+                    <TouchableWithoutFeedback>
                         <View style={styles.modalOverlay}>
                             <Calendar
-                                onDayPress={day => {
-                                    setCalendarSelected(day.dateString);
-                                    props.onDayPress(day);
-                                }}
+                                onDayPress={props.onDayPress}
                                 markedDates={{
-                                    [calendarSelected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                                    [props.selectedDate]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
                                 }}
                             />
                         </View>
@@ -62,12 +57,11 @@ const styles = StyleSheet.create({
     },
     modalOverlay: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
     },
     modalStyle: {
         padding: 20,
     },
-    modalContent: {
-        flex: 1,
+    overlayStyle: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',  // 모달 배경 색상 설정
     },
 });

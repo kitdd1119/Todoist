@@ -9,7 +9,8 @@ import {
     SimpleLineIcons,
     MaterialIcons
 }
-    from '@expo/vector-icons';
+from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
 import Colors from "../../constants/colors";
 import SafeAreaView from "../SafeAreaView/SafeAreaView";
@@ -19,9 +20,63 @@ function Setting({ navigation }) {
         navigation.goBack();
     }
 
+    const navigation2 = useNavigation();
+
+    function accountHandler() {
+        navigation2.navigate('계정');
+    }
+
+    function generalHandler() {
+        navigation2.navigate('일반');
+    }
+
+    function themeHandler() {
+        navigation2.navigate('테마');
+    }
+
+    function appIconHandler() {
+        navigation2.navigate('앱 아이콘');
+    }
+
+    function navigationHandler() {
+        navigation2.navigate('내비게이션');
+    }
+
+    function quickAddHandler() {
+        navigation2.navigate('빠른 추가');
+    }
+
+    function productivity2Handler() {
+        navigation2.navigate('생산성');
+    }
+
+    function alarm2Handler() {
+        navigation2.navigate('알림');
+    }
+
+    function siriHandler() {
+        navigation2.navigate('Siri');
+    }
+
+    function helpAndFeedbackHandler() {
+        navigation2.navigate('도움말 및 피드백');
+    }
+
+    function introductionHandler() {
+        navigation2.navigate('소개');
+    }
+
+    function newUpdateHandler() {
+        navigation2.navigate('새 업데이트');
+    }
+
+    function synchronizationHandler() {
+        navigation2.navigate('동기화');
+    }
+
     return (
-        <SafeAreaView style={styles.screen}>
-            <ScrollView style={styles.screen}>
+        <SafeAreaView style={styles.screen} >
+            <ScrollView style={styles.screen} >
                 <View style={styles.topContainer}>
                     <View style={styles.topTextView}>
                         <Text style={[styles.topText, { fontWeight: 'bold' }]}>설정</Text>
@@ -37,7 +92,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed}
-                                onPress={() => { }}
+                                onPress={accountHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -53,7 +108,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed2}
-                                onPress={() => { }}
+                                onPress={generalHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -71,7 +126,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed}
-                                onPress={() => { }}
+                                onPress={themeHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -87,7 +142,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed3}
-                                onPress={() => { }}
+                                onPress={appIconHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -103,7 +158,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed3}
-                                onPress={() => { }}
+                                onPress={navigationHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -119,7 +174,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed2}
-                                onPress={() => { }}
+                                onPress={quickAddHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -137,7 +192,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed}
-                                onPress={() => { }}
+                                onPress={productivity2Handler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -153,7 +208,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed2}
-                                onPress={() => { }}
+                                onPress={alarm2Handler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -171,7 +226,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed4}
-                                onPress={() => { }}
+                                onPress={siriHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -189,7 +244,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed}
-                                onPress={() => { }}
+                                onPress={helpAndFeedbackHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -205,7 +260,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed3}
-                                onPress={() => { }}
+                                onPress={introductionHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -221,7 +276,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed3}
-                                onPress={() => { }}
+                                onPress={newUpdateHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
@@ -237,7 +292,7 @@ function Setting({ navigation }) {
                         <View>
                             <Pressable
                                 style={({ pressed }) => pressed && styles.pressed2}
-                                onPress={() => { }}
+                                onPress={synchronizationHandler}
                             >
                                 <View style={styles.iconContainer}>
                                     <View style={styles.icon}>
