@@ -187,6 +187,7 @@ function ListScreenView() {
         component={ListScreen}
         options={{
           headerShown: false,
+          statusBarColor: Platform.OS === 'android' ? '#f9f9f2' : undefined
         }}
       />
       <Stack.Screen
@@ -234,6 +235,7 @@ function SettingView() {
         options={{
           headerShown: false,
           presentation: 'modal',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined
         }}
       />
       <Stack.Screen 
@@ -296,14 +298,15 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style='black' />
+      <StatusBar style='dark' />
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             name='MainOverview'
             component={MainOverview}
             options={{
-              headerShown: false
+              headerShown: false,
+              statusBarStyle: Platform.OS === 'android' ? 'dark' : undefined
             }}
           />
           <Stack.Screen
@@ -331,7 +334,7 @@ const styles = StyleSheet.create({
   },
   TopOption: {
     position: 'absolute',
-    top: Platform.OS === 'android' ? 48 : 64,
+    top: Platform.OS === 'android' ? 12 : 64,
     right: 10,
     zIndex: 1,
   },

@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Pressable } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Pressable, Platform } from "react-native";
 import {
     FontAwesome,
     AntDesign,

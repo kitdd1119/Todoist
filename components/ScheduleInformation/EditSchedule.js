@@ -5,7 +5,7 @@ import { MaterialIcons, AntDesign, SimpleLineIcons, Entypo, Octicons, FontAwesom
 import Calendars from "./Calendars";
 
 function EditSchedule({ onCancel, text }) {
-    const [modalIsVisible, setModalIsVisible] = useState('');
+    const [modalIsVisible, setModalIsVisible] = useState(false);
     const [calendarSelected, setCalendarSelected] = useState('');
 
     function onCalendarHandler() {
