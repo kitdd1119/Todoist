@@ -230,65 +230,112 @@ function SettingView() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='설정'
+        name='Setting'
         component={Setting}
         options={{
+          title: '설정',
           headerShown: false,
           presentation: 'modal',
           statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined
         }}
       />
-      <Stack.Screen 
-        name='계정'
+      <Stack.Screen
+        name='Account'
         component={Account}
+        options={{
+          title: '계정',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTransparent: true,
+        }}
       />
-      <Stack.Screen 
-        name='일반'
+      <Stack.Screen
+        name='General'
         component={General}
+        options={{
+          title: '일반',
+        }}
       />
-      <Stack.Screen 
-        name='테마'
+      <Stack.Screen
+        name='Theme'
         component={Theme}
+        options={{
+          title: '테마',
+        }}
       />
-      <Stack.Screen 
-        name='앱 아이콘'
+      <Stack.Screen
+        name='AppIcon'
         component={AppIcon}
+        options={{
+          title: '앱 아이콘',
+        }}
       />
-      <Stack.Screen 
-        name='내비게이션'
+      <Stack.Screen
+        name='Navigation'
         component={Navigation}
+        options={{
+          title: '내비게이션',
+        }}
       />
-      <Stack.Screen 
-        name='빠른 추가'
+      <Stack.Screen
+        name='QuickAdd'
         component={QuickAdd}
+        options={{
+          title: '빠른 추가',
+        }}
       />
-      <Stack.Screen 
-        name='생산성'
+      <Stack.Screen
+        name='Productivity2'
         component={Productivity2}
+        options={{
+          title: '생산성',
+        }}
       />
-      <Stack.Screen 
-        name='알림'
+      <Stack.Screen
+        name='Alarm2'
         component={Alarm2}
+        options={{
+          title: '알림',
+        }}
       />
-      <Stack.Screen 
+      <Stack.Screen
         name='Siri'
         component={Siri}
+        options={{
+        }}
       />
-      <Stack.Screen 
-        name='도움말 및 피드백'
+      <Stack.Screen
+        name='HelpAndFeedback'
         component={HelpAndFeedback}
+        options={{
+          title: '도움말 및 피드백',
+        }}
       />
-      <Stack.Screen 
-        name='소개'
+      <Stack.Screen
+        name='Introduction'
         component={Introduction}
+        options={{
+          title: '소개',
+        }}
       />
-      <Stack.Screen 
-        name='새 업데이트'
+      <Stack.Screen
+        name='NewUpdate'
         component={NewUpdate}
+        options={{
+          title: '새 업데이트',
+        }}
       />
-      <Stack.Screen 
-        name='동기화'
+      <Stack.Screen
+        name='Synchronization'
         component={Synchronization}
+        options={{
+          title: '동기화',
+          backgroundColor: 'rgb(242, 242, 242)'
+        }}
       />
     </Stack.Navigator>
   )

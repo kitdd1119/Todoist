@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { MaterialIcons, AntDesign, SimpleLineIcons, Entypo, Octicons, FontAwesome } from '@expo/vector-icons';
-
-import Calendars from "./Calendars";
+import { Calendar } from "react-native-calendars";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Modalize } from "react-native-modalize";
 
 function EditSchedule({ onCancel, text }) {
     const [modalIsVisible, setModalIsVisible] = useState(false);
     const [calendarSelected, setCalendarSelected] = useState('');
+    const modalRef = useRef(null);
+
+    useEffect(() => {
+        if (modalIsVisible) {
+            modalRef?.current?.open();
+        } else {
+            modalRef?.current?.close();
+        }
+    }, [modalIsVisible]);
+
 
     function onCalendarHandler() {
         setModalIsVisible(true);
@@ -17,12 +28,13 @@ function EditSchedule({ onCancel, text }) {
     }
 
     function handleDayPress(day) {
-        setCalendarSelected(day.dateString);
+        const selectedDateString = day.dateString;
+        setCalendarSelected(selectedDateString);
     }
 
     return (
         <>
-            <ScrollView>
+            <ScrollView style={styles.screen}>
                 <View style={styles.container}>
                     <View style={styles.topButton}>
                         <TouchableOpacity style={styles.horizontalAlignment}>
@@ -89,12 +101,42 @@ function EditSchedule({ onCancel, text }) {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <Calendars
-                visible={modalIsVisible}
-                selectedDate={calendarSelected}
-                onDayPress={handleDayPress}
-                offCalender={offCalendarHandler}
-            />
+            {/* 아래는 캘린더 화면 */}
+            <GestureHandlerRootView>
+                <Modalize
+                    ref={modalRef}
+                    snapPoint={600}
+                    modalStyle={styles.modalStyle}
+                    overlayStyle={styles.overlayStyle}
+                    handlePosition="inside"
+                    handleStyle={{ backgroundColor: 'silver' }}
+                    closeOnOverlayTap={true}
+                    panGestureComponentEnabled={true}
+                >
+                    <View style={styles.modalOverlay}>
+                        <View style={styles.topButtonContainer}>
+                            <TouchableOpacity onPress={offCalendarHandler}>
+                                <Text>취소</Text>
+                            </TouchableOpacity>
+                            <Text>일정</Text>
+                            <TouchableOpacity onPress={offCalendarHandler}>
+                                <Text>완료</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <Calendar
+                                onDayPress={handleDayPress}
+                                markedDates={{
+                                    [calendarSelected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                                }}
+                            />
+                        </View>
+                    </View>
+                    <View>
+                        <Text>asdasd</Text>
+                    </View>
+                </Modalize>
+            </GestureHandlerRootView>
         </>
     )
 }
@@ -102,6 +144,9 @@ function EditSchedule({ onCancel, text }) {
 export default EditSchedule;
 
 const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+    },
     container: {
         paddingTop: 18,
         paddingHorizontal: 18,
@@ -172,4 +217,20 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         alignItems: 'center'
     },
+    // 캘린더 스타일
+    modalOverlay: {
+        flex: 1,
+    },
+    modalStyle: {
+        padding: 20,
+    },
+    overlayStyle: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',  // 모달 배경 색상 설정
+    },
+    topButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10,
+    }
 });

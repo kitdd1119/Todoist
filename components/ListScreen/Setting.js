@@ -23,35 +23,35 @@ function Setting({ navigation }) {
     const navigation2 = useNavigation();
 
     function accountHandler() {
-        navigation2.navigate('계정');
+        navigation2.navigate('Account');
     }
 
     function generalHandler() {
-        navigation2.navigate('일반');
+        navigation2.navigate('General');
     }
 
     function themeHandler() {
-        navigation2.navigate('테마');
+        navigation2.navigate('Theme');
     }
 
     function appIconHandler() {
-        navigation2.navigate('앱 아이콘');
+        navigation2.navigate('AppIcon');
     }
 
     function navigationHandler() {
-        navigation2.navigate('내비게이션');
+        navigation2.navigate('Navigation');
     }
 
     function quickAddHandler() {
-        navigation2.navigate('빠른 추가');
+        navigation2.navigate('QuickAdd');
     }
 
     function productivity2Handler() {
-        navigation2.navigate('생산성');
+        navigation2.navigate('Productivity2');
     }
 
     function alarm2Handler() {
-        navigation2.navigate('알림');
+        navigation2.navigate('Alarm2');
     }
 
     function siriHandler() {
@@ -59,19 +59,19 @@ function Setting({ navigation }) {
     }
 
     function helpAndFeedbackHandler() {
-        navigation2.navigate('도움말 및 피드백');
+        navigation2.navigate('HelpAndFeedback');
     }
 
     function introductionHandler() {
-        navigation2.navigate('소개');
+        navigation2.navigate('Introduction');
     }
 
     function newUpdateHandler() {
-        navigation2.navigate('새 업데이트');
+        navigation2.navigate('NewUpdate');
     }
 
     function synchronizationHandler() {
-        navigation2.navigate('동기화');
+        navigation2.navigate('Synchronization');
     }
 
     return (
