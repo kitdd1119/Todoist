@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Image, Platform, StyleSheet, View } from 'react-native';
+import { Image, Platform, StyleSheet, View, TouchableOpacity, Linking } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import { Feather } from '@expo/vector-icons';
 
 import TodayScreen from './screens/TodayScreen';
 import ManagementBoxScreen from "./screens/ManagementBoxScreen";
@@ -164,8 +165,7 @@ function MainOverview() {
         >
           {() => (
             <SafeAreaView style={styles.screen2}>
-              <ListScreenView />
-              <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+              <ListScreenView startScheduleAddButtonHandler={startScheduleAddButtonHandler} />
             </SafeAreaView>
           )}
         </BottomTab.Screen>
@@ -179,17 +179,23 @@ function MainOverview() {
   )
 }
 
-function ListScreenView() {
+function ListScreenView({ startScheduleAddButtonHandler }) {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name='ListScreen'
-        component={ListScreen}
         options={{
           headerShown: false,
           statusBarColor: Platform.OS === 'android' ? '#f9f9f2' : undefined
         }}
-      />
+      >
+        {() => (
+          <>
+            <ListScreen />
+            <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+          </>
+        )}
+      </Stack.Screen>
       <Stack.Screen
         name='Productivity'
         component={Productivity}
@@ -227,6 +233,10 @@ function ListScreenView() {
 }
 
 function SettingView() {
+  function link() {
+    Linking.openURL('https://google.com');
+  }
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -250,6 +260,7 @@ function SettingView() {
           },
           headerTintColor: Colors.mainColor,
           headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
           headerTransparent: true,
         }}
       />
@@ -258,6 +269,14 @@ function SettingView() {
         component={General}
         options={{
           title: '일반',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
@@ -265,6 +284,19 @@ function SettingView() {
         component={Theme}
         options={{
           title: '테마',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
+          headerRight: () => (
+            <TouchableOpacity onPress={link}>
+              <Feather name="help-circle" size={24} color={Colors.mainColor} />
+            </TouchableOpacity>
+          )
         }}
       />
       <Stack.Screen

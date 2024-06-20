@@ -9,7 +9,7 @@ import {
     SimpleLineIcons,
     MaterialIcons
 }
-from '@expo/vector-icons';
+    from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 
 import Colors from "../../constants/colors";
@@ -122,6 +122,7 @@ function Setting({ navigation }) {
                             </Pressable>
                         </View>
                     </View>
+                    <Text style={{ color: 'gray', marginHorizontal: 12, marginVertical: 6,}}>개인화</Text>
                     <View style={styles.settingButton}>
                         <View>
                             <Pressable
@@ -188,6 +189,7 @@ function Setting({ navigation }) {
                             </Pressable>
                         </View>
                     </View>
+                    <Text style={{ color: 'gray', marginHorizontal: 12, marginVertical: 6,}}>생산성</Text>
                     <View style={styles.settingButton}>
                         <View>
                             <Pressable

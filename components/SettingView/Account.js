@@ -10,8 +10,8 @@ function Account() {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.container}>
+        <SafeAreaView style={styles.screen}>
+            <ScrollView style={styles.screen}>
                 <View style={styles.container}>
                     <View style={styles.photoEditingContainer}>
                         <TouchableOpacity style={styles.photoEditingButton}>
@@ -64,13 +64,16 @@ function Account() {
 export default Account;
 
 const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+    },
     container: {
         flex: 1,
-        paddingTop: Platform.OS === 'android' ? 16 : undefined
+        paddingTop: Platform.OS === 'android' ? 60 : undefined
         // 안드로이드에서 왜 SafeAreaView가 적용이 안되는지 모르겠음.
     },
     photoEditingContainer: {
-        height: 150
+        height: '20%'
     },
     photoEditingButton: {
         height: '100%',
