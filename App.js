@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, Platform, StyleSheet, View, TouchableOpacity, Linking } from 'react-native';
+import { Image, Platform, StyleSheet, View, TouchableOpacity, Linking, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -304,6 +304,14 @@ function SettingView() {
         component={AppIcon}
         options={{
           title: '앱 아이콘',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
@@ -311,6 +319,19 @@ function SettingView() {
         component={Navigation}
         options={{
           title: '내비게이션',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
+          headerRight: () => (
+            <TouchableOpacity>
+              <Text style={{ color: Colors.mainColor, fontSize: 18 }}>편집</Text>
+            </TouchableOpacity>
+          )
         }}
       />
       <Stack.Screen
@@ -318,6 +339,14 @@ function SettingView() {
         component={QuickAdd}
         options={{
           title: '빠른 추가',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
@@ -325,6 +354,14 @@ function SettingView() {
         component={Productivity2}
         options={{
           title: '생산성',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
@@ -332,12 +369,29 @@ function SettingView() {
         component={Alarm2}
         options={{
           title: '알림',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
         name='Siri'
         component={Siri}
         options={{
+          title: 'Siri',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
@@ -345,6 +399,14 @@ function SettingView() {
         component={HelpAndFeedback}
         options={{
           title: '도움말 및 피드백',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
@@ -352,6 +414,14 @@ function SettingView() {
         component={Introduction}
         options={{
           title: '소개',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
         }}
       />
       <Stack.Screen
@@ -366,7 +436,6 @@ function SettingView() {
         component={Synchronization}
         options={{
           title: '동기화',
-          backgroundColor: 'rgb(242, 242, 242)'
         }}
       />
     </Stack.Navigator>
