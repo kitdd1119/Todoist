@@ -4,17 +4,19 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { Feather } from '@expo/vector-icons';
+import { Feather, AntDesign } from '@expo/vector-icons';
 
 import TodayScreen from './screens/TodayScreen';
 import ManagementBoxScreen from "./screens/ManagementBoxScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ListScreen from "./screens/ListScreen";
+import FilterAndLabel from "./screens/FilterAndLabel";
+import UpComing from "./screens/UpComing";
 import Colors from './constants/colors';
 import ScheduleInput from './components/schedule/ScheduleInput';
 import ScheduleAddButton from './components/schedule/ScheduleAddButton';
 import TopOption from './components/topOption/TopOption';
-import ScheduleInformation from './screens/ScheduleInformation';
+import ScheduleInformation from './components/ScheduleInformation/ScheduleInformation';
 import SafeAreaView from './components/SafeAreaView/SafeAreaView';
 import Productivity from './components/ListScreen/Productivity';
 import Alarm from './components/ListScreen/Alarm';
@@ -40,6 +42,10 @@ const BottomTab = createBottomTabNavigator();
 function MainOverview() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseSchedules, setCourseSchedules] = useState([]);
+  
+  // 설정의 내비게이션에 따라 바텀 탭에 표시가 되고 안되고 설정할 수 있는 함수를 작성해야 함.
+  const viewScreen = true;
+  const noViewScreen = false;
 
   function startScheduleAddButtonHandler() {
     setModalIsVisible(true);
@@ -169,6 +175,53 @@ function MainOverview() {
             </SafeAreaView>
           )}
         </BottomTab.Screen>
+        {viewScreen && (<BottomTab.Screen
+          name="다음 화면"
+          options={{
+            headerShown: false,
+            tabBarLabel: '다음',
+            tabBarIcon: ({ focused }) => (
+              <AntDesign name="calendar" size={25} color={focused ? Colors.mainColor : 'black'} />
+            )
+          }}
+        >
+          {() => (
+            <SafeAreaView style={styles.screen}>
+              <UpComing
+                courseSchedules={courseSchedules}
+                setCourseSchedules={setCourseSchedules}
+              />
+              <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+            </SafeAreaView>
+          )}
+        </BottomTab.Screen>
+        )}
+        {viewScreen && (<BottomTab.Screen
+          name="필터 & 라벨"
+          options={{
+            headerShown: false,
+            tabBarLabel: '필터 & 라벨',
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused
+                  ? require('./assets/BottomTab/filter_label.png')
+                  : require('./assets/BottomTab/Today.png')
+                }
+                style={{ width: 24, height: 24 }} />
+            )
+          }}
+        >
+          {() => (
+            <SafeAreaView style={styles.screen}>
+              <FilterAndLabel
+                courseSchedules={courseSchedules}
+                setCourseSchedules={setCourseSchedules}
+              />
+              <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
+            </SafeAreaView>
+          )}
+        </BottomTab.Screen>
+        )}
       </BottomTab.Navigator>
       <ScheduleInput
         visible={modalIsVisible}

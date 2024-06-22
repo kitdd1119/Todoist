@@ -26,6 +26,14 @@ function ListScreen() {
         navigation.navigate('Project');
     }
 
+    function UpComingHandler() {
+        navigation.navigate('UpComing');
+    }
+
+    function FilterAndLabelHandler() {
+        navigation.navigate('FilterAndLabel');
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.topButton}>
@@ -41,14 +49,14 @@ function ListScreen() {
             </View>
             <View style={styles.list1}>
                 <View style={styles.listOption1}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={UpComingHandler}>
                         <View style={styles.list1next}>
                             <AntDesign name="calendar" size={24} color={Colors.mainColor} />
                             <Text style={styles.listOption1Text}>다음</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={FilterAndLabelHandler}>
                     <View style={styles.list2next}>
                         <Image source={require('../assets/BottomTab/filter_label.png')} style={{ width: 24, height: 24 }} />
                         <Text style={styles.listOption1Text}>필터 & 라벨</Text>

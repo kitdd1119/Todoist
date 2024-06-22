@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
-import EditSchedule from "../components/ScheduleInformation/EditSchedule";
-import SafeAreaView from "../components/SafeAreaView/SafeAreaView";
+import EditSchedule from "./EditSchedule";
+import SafeAreaView from "../SafeAreaView/SafeAreaView";
 
 function ScheduleInformation({ navigation }) {
     const route = useRoute();
