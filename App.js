@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { Feather, AntDesign, SimpleLineIcons } from '@expo/vector-icons';
 
 import TodayScreen from './screens/TodayScreen';
 import ManagementBoxScreen from "./screens/ManagementBoxScreen";
@@ -42,7 +42,7 @@ const BottomTab = createBottomTabNavigator();
 function MainOverview() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseSchedules, setCourseSchedules] = useState([]);
-  
+
   // 설정의 내비게이션에 따라 바텀 탭에 표시가 되고 안되고 설정할 수 있는 함수를 작성해야 함.
   const viewScreen = true;
   const noViewScreen = false;
@@ -176,12 +176,30 @@ function MainOverview() {
           )}
         </BottomTab.Screen>
         {viewScreen && (<BottomTab.Screen
-          name="다음 화면"
+          name="다음"
           options={{
-            headerShown: false,
             tabBarLabel: '다음',
             tabBarIcon: ({ focused }) => (
               <AntDesign name="calendar" size={25} color={focused ? Colors.mainColor : 'black'} />
+            ),
+            headerLeft: () => {
+              {
+                // 바텀 탭 내비게이션에 포함된 것이 아닌 목록 화면에서 클릭한 다음 화면일 경우 뒤로가기 버튼 생성
+              }
+            },
+            headerRight: () => (
+              <>
+                {/* { 
+                  pressed 
+                    ? <TouchableOpacity>
+                      <AntDesign name="warning" size={18} color={Colors.mainColor} />
+                    </TouchableOpacity>
+                    : undefined
+                } */}
+                <TouchableOpacity style={{ marginRight: 20 }}>
+                  <SimpleLineIcons name="options" size={18} color={Colors.mainColor} />
+                </TouchableOpacity>
+              </>
             )
           }}
         >
@@ -208,7 +226,12 @@ function MainOverview() {
                   : require('./assets/BottomTab/Today.png')
                 }
                 style={{ width: 24, height: 24 }} />
-            )
+            ),
+            headerLeft: () => {
+              {
+                // 바텀 탭 내비게이션에 포함된 것이 아닌 목록 화면에서 클릭한 필터 & 라벨 화면일 경우 뒤로가기 버튼 생성
+              }
+            },
           }}
         >
           {() => (
