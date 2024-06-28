@@ -6,28 +6,28 @@ import {
 } from "react-native";
 import { Agenda } from "react-native-calendars";
 
+const weekdayNames = ['일', '월', '화', '수', '목', '금', '토'];
+
 function UpComing() {
-    const [selected, setSelected] = useState('');
+    const today = new Date();
     const [items, setItems] = useState({});
 
     const loadItems = (day) => {
-        // 이 함수 안에 
-        const newItems = {};
-        for (let i = -15; i < 15; i++) {
-            const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-            const strTime = timeToString(time);
-            if (!items[strTime]) {
-                newItems[strTime] = [];
-                const numItems = Math.floor(Math.random() * 3 + 1);
-                for (let j = 0; j < numItems; j++) {
+        setTimeout(() => {
+            const newItems = {};
+            for (let i = 0; i < 30; i++) {
+                const time = new Date(day.timestamp + i * 24 * 60 * 60 * 1000);
+                const strTime = time.toISOString().split('T')[0];
+                if (!newItems[strTime]) {
+                    newItems[strTime] = [];
                     newItems[strTime].push({
-                        name: `일정 ${strTime} #${j}`,
+                        name: `Item for ${strTime}`,
                         height: Math.max(50, Math.floor(Math.random() * 150)),
                     });
                 }
             }
-        }
-        setItems(newItems);
+            setItems(newItems);
+        }, 1000);
     };
 
     function minDate() {
@@ -38,93 +38,65 @@ function UpComing() {
         return `${year}-${month}-${day}`;
     }
 
-    const timeToString = (time) => {
-        const date = new Date(time);
-        return date.toISOString().split('T')[0];
-    };
+    const renderItem = (item) => (
+        <View style={styles.item}>
+            <Text>{item.name}</Text>
+        </View>
+    );
 
-    const renderItem = (item) => {
+    const renderDay = (day, item) => {
+        if (!day) {
+            return <View style={styles.emptyDay} />;
+        }
+        const dayString = `${day.day}.일 - ${weekdayNames[day.weekday]}`;
+        const isOddMonth = day.month % 2 !== 0;
+        const backgroundColor = isOddMonth ? 'rgba(0, 0, 0, 0.1)' : 'white';
+        const isFirstDayOfMonth = day.day === 1;
         return (
-            <View style={[styles.item, { height: item.height }]}>
-                <Text>{item.name}</Text>
+            <View style={[styles.day, { backgroundColor }]}>
+                {isFirstDayOfMonth && <Text style={styles.monthText}>{day.month}월</Text>}
+                <Text style={styles.dayText}>{dayString}</Text>
             </View>
         );
     };
 
-    useEffect(() => {
-        const today = new Date();
-        loadItems({ timestamp: today.getTime() });
-    }, []);
+    const rowHasChanged = (r1, r2) => r1.name !== r2.name;
+
+    const handleDayPress = (day) => {
+        const selectedDate = new Date(day.year, day.month - 1, day.day);
+        if (selectedDate < today) {
+            return;
+        }
+        // Handle day press logic here
+    };
 
     return (
         <Agenda
-            // // Agenda에 표시할 항목들의 목록. 날짜 키가 빈 배열인 경우, 해당 날짜가 비어있는 것으로 간주됨.
             items={items}
-
-            // 특정 월의 항목을 로드해야 할 때 호출되는 콜백 함수.
             loadItemsForMonth={loadItems}
-
-            // // 날짜를 눌렀을 때 호출되는 콜백 함수.
-            onDayPress={day => {
-                setSelected(day.dateString);
-            }}
-
-            // 일정 항목이 있는 날짜 마크.
-            markedDates={{
-                [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
-            }}
-
-            // // 처음 선택된 날짜.
-            selected={timeToString(new Date().getTime())}
-
-            // 선택할 수 있는 최소 날짜.
-            minDate={minDate()}
-
-            // 과거로 스크롤할 수 있는 최대 월 수.
-            pastScrollRange={0}
-
-            // 각 항목이 어떻게 렌더링될 것인지 지정.
+            selected={today}
             renderItem={renderItem}
-
-            // // 각 날짜가 어떻게 렌더링될지를 지정. item이 첫 번째 항목이 아닌 경우 day는 undefined일 수 있음.
-            // renderDay={{
-
-            // }}
-
-            // // 항목이 없는 빈 날짜의 내용을 어떻게 렌더링할 것인지 지정.
-            // renderEmptyDate={{
-
-            // }}
-
-            // // 커스텀 구현된 컴포넌트로 내부 목록을 덮어씀.
-            // renderList={{
-
-            // }}
-
-            // 손잡이 커스텀 렌더링. (높이를 설정해도 손잡이가 올라가지 않음.)
-            // renderKnob={}
-
-            // 손잡이가 항상 보이도록.
+            renderDay={renderDay}
+            rowHasChanged={rowHasChanged}
+            minDate={minDate()}
+            pastScrollRange={1}
+            futureScrollRange={12}
+            onDayPress={handleDayPress}
             showClosingKnob={true}
-
-            // Agenda 달력의 테마 지정.
-            // theme={{
-            //     agendaDayTextColor: 'green',
-            //     backgroundColor: 'red'
-            // }}
-
-            // Agenda 컨테이너 스타일 지정.
-            style={styles.calendarContainer}
+            theme={{
+                agendaDayTextColor: 'transparent',
+                agendaDayNumColor: 'transparent',
+                agendaTodayColor: 'blue',
+                agendaKnobColor: 'gray',
+            }}
         />
-    )
-}
+    );
+};
+
 
 export default UpComing;
 
 const styles = StyleSheet.create({
-    calendarContainer: {
-        height: 500, // 달력의 높이를 설정
-    },
     item: {
         backgroundColor: 'white',
         flex: 1,
@@ -133,5 +105,22 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginTop: 17,
     },
+    day: {
+        borderRadius: 5,
+        padding: 10,
+        marginRight: 10,
+        marginTop: 17,
+    },
+    dayText: {
+        fontSize: 16,
+    },
+    monthText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    emptyDay: {
+        height: 15,
+        flex: 1,
+        paddingTop: 30,
+    },
 });
-
