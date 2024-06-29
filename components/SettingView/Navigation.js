@@ -2,6 +2,8 @@ import { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, Switch, Platform, Pressable, Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { Checkbox } from "react-native-paper";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import Colors from "../../constants/colors";
 
@@ -23,60 +25,102 @@ function Navigation() {
         setChecked5(checkAll);
     }
 
+    const rightSwipeActions = () => {
+        return (
+            <View
+                style={{
+                    backgroundColor: 'red',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderTopRightRadius: 5,
+                }}>
+                <Text
+                    style={{
+                        paddingHorizontal: 26,
+                        paddingVertical: 10,
+                        fontSize: 18,
+                        color: 'white'
+                    }}
+                >
+                    삭제
+                </Text>
+            </View>
+        );
+    };
+
     return (
         <SafeAreaView style={styles.screen}>
             <ScrollView style={styles.screen}>
                 <View style={[styles.settingButtonContainer, { paddingTop: Platform.OS === 'android' ? 48 : undefined }]}>
                     <Text style={styles.tinyText}>탭바</Text>
                     <View style={styles.settingButton}>
-                        <Pressable
-                            style={({ pressed }) => pressed && styles.pressed}
-                        >
-                            <View style={styles.iconContainer}>
-                                <View style={styles.icon}>
-                                    <Image
-                                        source={require('../../assets/BottomTab/Today2.png')}
-                                        style={{ width: 24, height: 24 }}
-                                    />
-                                </View>
-                                <View style={styles.bottomWidthView}>
-                                    <Text style={styles.text}>오늘</Text>
-                                    <AntDesign name="right" size={10} color="black" />
-                                </View>
-                            </View>
-                        </Pressable>
-                        <Pressable
-                            style={({ pressed }) => pressed && styles.pressed3}
-                        >
-                            <View style={styles.iconContainer}>
-                                <View style={styles.icon}>
-                                    <Image
-                                        source={require('../../assets/BottomTab/ManagementBox2.png')}
-                                        style={{ width: 24, height: 24 }}
-                                    />
-                                </View>
-                                <View style={styles.bottomWidthView}>
-                                    <Text style={styles.text}>관리함</Text>
-                                    <AntDesign name="right" size={10} color="black" />
-                                </View>
-                            </View>
-                        </Pressable>
-                        <Pressable
-                            style={({ pressed }) => pressed && styles.pressed3}
-                        >
-                            <View style={styles.iconContainer}>
-                                <View style={styles.icon}>
-                                    <Image
-                                        source={require('../../assets/BottomTab/Search2.png')}
-                                        style={{ width: 24, height: 24 }}
-                                    />
-                                </View>
-                                <View style={styles.bottomWidthView}>
-                                    <Text style={styles.text}>검색</Text>
-                                    <AntDesign name="right" size={10} color="black" />
-                                </View>
-                            </View>
-                        </Pressable>
+                        <GestureHandlerRootView style={{ flex: 1 }}>
+                            <Swipeable
+                                renderRightActions={rightSwipeActions}
+                            >
+                                <Pressable
+                                    style={({ pressed }) => pressed && styles.pressed}
+                                >
+
+                                    <View style={styles.iconContainer}>
+                                        <View style={styles.icon}>
+                                            <Image
+                                                source={require('../../assets/BottomTab/Today2.png')}
+                                                style={{ width: 24, height: 24 }}
+                                            />
+                                        </View>
+                                        <View style={styles.bottomWidthView}>
+                                            <Text style={styles.text}>오늘</Text>
+                                            <AntDesign name="right" size={10} color="black" />
+                                        </View>
+                                    </View>
+                                </Pressable>
+                            </Swipeable>
+                        </GestureHandlerRootView>
+                        <GestureHandlerRootView style={{ flex: 1 }}>
+                            <Swipeable
+                                renderRightActions={rightSwipeActions}
+                            >
+                                <Pressable
+                                    style={({ pressed }) => pressed && styles.pressed3}
+                                >
+                                    <View style={styles.iconContainer}>
+                                        <View style={styles.icon}>
+                                            <Image
+                                                source={require('../../assets/BottomTab/ManagementBox2.png')}
+                                                style={{ width: 24, height: 24 }}
+                                            />
+                                        </View>
+                                        <View style={styles.bottomWidthView}>
+                                            <Text style={styles.text}>관리함</Text>
+                                            <AntDesign name="right" size={10} color="black" />
+                                        </View>
+                                    </View>
+                                </Pressable>
+                            </Swipeable>
+                        </GestureHandlerRootView>
+                        <GestureHandlerRootView style={{ flex: 1 }}>
+                            <Swipeable
+                                renderRightActions={rightSwipeActions}
+                            >
+                                <Pressable
+                                    style={({ pressed }) => pressed && styles.pressed3}
+                                >
+                                    <View style={styles.iconContainer}>
+                                        <View style={styles.icon}>
+                                            <Image
+                                                source={require('../../assets/BottomTab/Search2.png')}
+                                                style={{ width: 24, height: 24 }}
+                                            />
+                                        </View>
+                                        <View style={styles.bottomWidthView}>
+                                            <Text style={styles.text}>검색</Text>
+                                            <AntDesign name="right" size={10} color="black" />
+                                        </View>
+                                    </View>
+                                </Pressable>
+                            </Swipeable>
+                        </GestureHandlerRootView>
                         <Pressable
                             style={({ pressed }) => pressed && styles.pressed3}
                         >
@@ -92,19 +136,25 @@ function Navigation() {
                                 </View>
                             </View>
                         </Pressable>
-                        <Pressable
-                            style={({ pressed }) => pressed && styles.pressed2}
-                        >
-                            <View style={styles.iconContainer}>
-                                <View style={styles.icon}>
-                                    <AntDesign name="plus" size={24} color={Colors.mainColor} />
-                                </View>
-                                <View style={styles.bottomWidthView2}>
-                                    <Text style={styles.text}>추가</Text>
-                                    <AntDesign name="right" size={10} color="black" />
-                                </View>
-                            </View>
-                        </Pressable>
+                        <GestureHandlerRootView style={{ flex: 1 }}>
+                            <Swipeable
+                                renderRightActions={rightSwipeActions}
+                            >
+                                <Pressable
+                                    style={({ pressed }) => pressed && styles.pressed2}
+                                >
+                                    <View style={styles.iconContainer}>
+                                        <View style={styles.icon}>
+                                            <AntDesign name="plus" size={24} color={Colors.mainColor} />
+                                        </View>
+                                        <View style={styles.bottomWidthView2}>
+                                            <Text style={styles.text}>추가</Text>
+                                            <AntDesign name="right" size={10} color="black" />
+                                        </View>
+                                    </View>
+                                </Pressable>
+                            </Swipeable>
+                        </GestureHandlerRootView>
                     </View>
                     <Text style={[styles.tinyText, { marginBottom: 30 }]}>워크플로에 맞게 탭바 내비게이션을 사용자 정의하세요. 유효한 슬롯에서 대상을 선택하고 "편집"을 탭하여 재정렬하세요.</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

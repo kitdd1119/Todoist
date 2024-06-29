@@ -44,8 +44,9 @@ function MainOverview() {
   const [courseSchedules, setCourseSchedules] = useState([]);
 
   // 설정의 내비게이션에 따라 바텀 탭에 표시가 되고 안되고 설정할 수 있는 함수를 작성해야 함.
+  // const navigationCheck = ;
+  // const viewScreen = {{navigationCheck ? true : false}};
   const viewScreen = true;
-  const noViewScreen = false;
 
   function startScheduleAddButtonHandler() {
     setModalIsVisible(true);
