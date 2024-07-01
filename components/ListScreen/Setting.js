@@ -39,7 +39,9 @@ function Setting({ navigation }) {
     }
 
     function navigationHandler() {
-        navigation2.navigate('Navigation');
+        navigation2.navigate('NavigationView', {
+            screen: 'Navigation',
+        });
     }
 
     function quickAddHandler() {

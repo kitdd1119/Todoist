@@ -35,6 +35,7 @@ import HelpAndFeedback from './components/SettingView/HelpAndFeedback';
 import Introduction from './components/SettingView/Introduction';
 import NewUpdate from './components/SettingView/NewUpdate';
 import Synchronization from './components/SettingView/Synchronization';
+import TabBar from './components/SettingView/Navigation/TabBar';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -309,6 +310,48 @@ function ListScreenView({ startScheduleAddButtonHandler }) {
   )
 }
 
+function NavigationView() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name='Navigation'
+        component={Navigation}
+        options={{
+          title: '내비게이션',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
+          headerRight: () => (
+            <TouchableOpacity>
+              <Text style={{ color: Colors.mainColor, fontSize: 18 }}>편집</Text>
+            </TouchableOpacity>
+          )
+        }}
+      />
+      <Stack.Screen
+        name='TabBar'
+        component={TabBar}
+        options={{
+          title: '탭바',
+          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
+          headerStyle: {
+            backgroundColor: 'rgb(242, 242, 242)',
+          },
+          headerTintColor: Colors.mainColor,
+          headerTitleStyle: { color: 'black' },
+          headerTitleAlign: 'center',
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  )
+}
+
 function SettingView() {
   function link() {
     Linking.openURL('https://google.com');
@@ -392,23 +435,10 @@ function SettingView() {
         }}
       />
       <Stack.Screen
-        name='Navigation'
-        component={Navigation}
+        name='NavigationView'
+        component={NavigationView}
         options={{
-          title: '내비게이션',
-          statusBarColor: Platform.OS === 'android' ? 'rgb(242, 242, 242)' : undefined,
-          headerStyle: {
-            backgroundColor: 'rgb(242, 242, 242)',
-          },
-          headerTintColor: Colors.mainColor,
-          headerTitleStyle: { color: 'black' },
-          headerTitleAlign: 'center',
-          headerTransparent: true,
-          headerRight: () => (
-            <TouchableOpacity>
-              <Text style={{ color: Colors.mainColor, fontSize: 18 }}>편집</Text>
-            </TouchableOpacity>
-          )
+          headerShown: false,
         }}
       />
       <Stack.Screen

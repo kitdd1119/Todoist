@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, Switch, Platform, Pressable, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from '@expo/vector-icons';
 import { Checkbox } from "react-native-paper";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
-
+// Swipeable 기능을 다른 api를 사용해서 구현하는 것도 강구해 볼 필요가 있음.
 import Colors from "../../constants/colors";
 
 function Navigation() {
+    const navigation = useNavigation();
+
     const [checked, setChecked] = useState(false);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
@@ -23,6 +26,10 @@ function Navigation() {
         setChecked3(checkAll);
         setChecked4(checkAll);
         setChecked5(checkAll);
+    }
+
+    function TabBarHandler() {
+        navigation.navigate('TabBar');
     }
 
     const rightSwipeActions = () => {
@@ -60,6 +67,7 @@ function Navigation() {
                             >
                                 <Pressable
                                     style={({ pressed }) => pressed && styles.pressed}
+                                    onPress={TabBarHandler}
                                 >
 
                                     <View style={styles.iconContainer}>
@@ -83,6 +91,7 @@ function Navigation() {
                             >
                                 <Pressable
                                     style={({ pressed }) => pressed && styles.pressed3}
+                                    onPress={TabBarHandler}
                                 >
                                     <View style={styles.iconContainer}>
                                         <View style={styles.icon}>
@@ -105,6 +114,7 @@ function Navigation() {
                             >
                                 <Pressable
                                     style={({ pressed }) => pressed && styles.pressed3}
+                                    onPress={TabBarHandler}
                                 >
                                     <View style={styles.iconContainer}>
                                         <View style={styles.icon}>
@@ -121,27 +131,24 @@ function Navigation() {
                                 </Pressable>
                             </Swipeable>
                         </GestureHandlerRootView>
-                        <Pressable
-                            style={({ pressed }) => pressed && styles.pressed3}
-                        >
-                            <View style={styles.iconContainer}>
-                                <View style={styles.icon}>
-                                    <Image
-                                        source={require('../../assets/BottomTab/ManagementBox2.png')}
-                                        style={{ width: 24, height: 24 }}
-                                    />
-                                </View>
-                                <View style={styles.bottomWidthView}>
-                                    <Text style={styles.text}>목록</Text>
-                                </View>
+                        <View style={styles.iconContainer}>
+                            <View style={styles.icon}>
+                                <Image
+                                    source={require('../../assets/BottomTab/ManagementBox2.png')}
+                                    style={{ width: 24, height: 24 }}
+                                />
                             </View>
-                        </Pressable>
+                            <View style={styles.bottomWidthView}>
+                                <Text style={styles.text}>목록</Text>
+                            </View>
+                        </View>
                         <GestureHandlerRootView style={{ flex: 1 }}>
                             <Swipeable
                                 renderRightActions={rightSwipeActions}
                             >
                                 <Pressable
                                     style={({ pressed }) => pressed && styles.pressed2}
+                                    onPress={TabBarHandler}
                                 >
                                     <View style={styles.iconContainer}>
                                         <View style={styles.icon}>
