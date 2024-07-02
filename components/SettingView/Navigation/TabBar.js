@@ -14,6 +14,7 @@ function TabBar() {
                         <TextInput
                             style={styles.textInput}
                             placeholder="검색"
+                            placeholderTextColor='gray'
                         />
                     </View>
                     <View style={styles.settingButton}>
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     },
     settingButtonContainer: {
         marginHorizontal: 10,
-        // marginVertical: 20
+        marginVertical: 20
     },
     textInputContainer: {
         flex: 1,

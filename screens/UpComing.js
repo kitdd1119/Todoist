@@ -15,7 +15,7 @@ function UpComing() {
     const loadItems = (day) => {
         setTimeout(() => {
             const newItems = {};
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 10; i++) {
                 const time = new Date(day.timestamp + i * 24 * 60 * 60 * 1000);
                 const strTime = time.toISOString().split('T')[0];
                 if (!newItems[strTime]) {
