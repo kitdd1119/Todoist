@@ -76,9 +76,13 @@ function MainOverview() {
         }}
       >
         <BottomTab.Screen
-          name="오늘 화면"
+          name="오늘"
           options={{
-            headerShown: false,
+            headerRight: () => (
+              <View style={{ marginRight: 20, }}>
+                <TopOption todayScreen={true} />
+              </View>
+            ),
             tabBarLabel: '오늘',
             tabBarIcon: ({ focused }) => (
               <Image
@@ -92,9 +96,6 @@ function MainOverview() {
         >
           {() => (
             <SafeAreaView style={styles.screen}>
-              <View style={styles.TopOption}>
-                <TopOption todayScreen={true} />
-              </View>
               <TodayScreen
                 courseSchedules={courseSchedules}
                 setCourseSchedules={setCourseSchedules}

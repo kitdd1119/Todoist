@@ -51,7 +51,7 @@ function SearchScreen({ courseSchedules, setCourseSchedules }) {
 
     function todayScreenHandler() {
         navigation.navigate('MainOverview', {
-            screen: 'TodayScreen',
+            screen: '오늘',
         });
     }
 

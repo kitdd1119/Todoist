@@ -60,7 +60,7 @@ function TopOption({ todayScreen }) {
                     onDismiss={menuOff}
                     style={styles.menu}
                     anchor={
-                        <TouchableOpacity onPress={menuOn} style={styles.option}>
+                        <TouchableOpacity onPress={menuOn}>
                             <SimpleLineIcons name="options" size={18} color={Colors.mainColor} />
                         </TouchableOpacity>
                     }
@@ -110,13 +110,8 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
     },
-    option: {
-        width: 18,
-        height: 18,
-    },
     menu: {
-        width: 300,
-        top: 30,
+        width: 200,
         left: 'auto',
         right: 10,
     },
