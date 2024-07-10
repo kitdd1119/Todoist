@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from "react-native";
 import { Snackbar } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 import AddScheduleList from "../components/schedule/AddScheduleList";
 import { deleteSchedule, fetchSchedule } from "../util/http";
 
 function TodayScreen({ courseSchedules, setCourseSchedules }) {
+    const navigation = useNavigation();
+
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [deletedSchedule, setDeletedSchedule] = useState(null);
 
@@ -47,31 +50,43 @@ function TodayScreen({ courseSchedules, setCourseSchedules }) {
         }
     }
 
+    function handleScroll(event) {
+        const scrollY = event.nativeEvent.contentOffset.y;
+        if (scrollY <= 50) { // 스크롤 위치가 50 이상이면 헤더 타이틀을 표시
+            navigation.setOptions({ headerTitle: '' });
+        } else {
+            navigation.setOptions({ headerTitle: '오늘' });
+        }
+    }
+
     return (
         <>
-            <View style={styles.container}>
-                <View style={styles.topNavigation}>
-                    <Text style={styles.text}>오늘</Text>
+            <ScrollView style={styles.container} onScroll={handleScroll}>
+                <View style={styles.container}>
+                    <View style={styles.topNavigation}>
+                        <Text style={styles.text}>오늘</Text>
+                    </View>
+                    <View style={styles.scheduleContainer}>
+                        <FlatList
+                            scrollEnabled={false}
+                            data={courseSchedules}
+                            renderItem={(itemData) => {
+                                return (
+                                    <AddScheduleList
+                                        text={itemData.item.text}
+                                        id={itemData.item.id}
+                                        onDeleteSchedule={deleteScheduleHandler}
+                                    />
+                                );
+                            }}
+                            keyExtractor={(item, index) => {
+                                return item.id;
+                            }}
+                            alwaysBounceVertical={false}>
+                        </FlatList>
+                    </View>
                 </View>
-                <View style={styles.scheduleContainer}>
-                    <FlatList
-                        data={courseSchedules}
-                        renderItem={(itemData) => {
-                            return (
-                                <AddScheduleList
-                                    text={itemData.item.text}
-                                    id={itemData.item.id}
-                                    onDeleteSchedule={deleteScheduleHandler}
-                                />
-                            );
-                        }}
-                        keyExtractor={(item, index) => {
-                            return item.id;
-                        }}
-                        alwaysBounceVertical={false}>
-                    </FlatList>
-                </View>
-            </View>
+            </ScrollView>
             <Snackbar
                 visible={snackbarVisible}
                 onDismiss={snackbarOff}
@@ -95,13 +110,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     topNavigation: {
-        marginTop: 30,
         borderBottomWidth: 1,
-        borderBottomColor: 'gray', // #fafafa
+        borderBottomColor: 'rgba(0, 0, 0, 0.1)',
     },
     text: {
-        marginLeft: 10,
-        fontSize: 24,
+        margin: 10,
+        fontSize: 30,
         fontWeight: 'bold',
     },
     scheduleContainer: {

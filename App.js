@@ -78,9 +78,20 @@ function MainOverview() {
         <BottomTab.Screen
           name="오늘"
           options={{
+            headerShown: true,
+            headerStyle: {
+              borderBottomWidth: 0,
+              shadowOpacity: 0, // iOS 그림자 제거
+              elevation: 0, // Android 그림자 제거
+            },
             headerRight: () => (
-              <View style={{ marginRight: 20, }}>
-                <TopOption todayScreen={true} />
+              <View style={{ flexDirection: 'row', marginRight: 20 }}>
+                <View style={{ marginRight: 20 }}>
+                  <SimpleLineIcons name="options" size={18} color={Colors.mainColor} />
+                </View>
+                <View>
+                  <TopOption todayScreen={true} />
+                </View>
               </View>
             ),
             tabBarLabel: '오늘',
