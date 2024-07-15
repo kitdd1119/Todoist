@@ -61,7 +61,7 @@ function TopOption({ todayScreen }) {
                     style={styles.menu}
                     anchor={
                         <TouchableOpacity onPress={menuOn}>
-                            <SimpleLineIcons name="options" size={18} color={Colors.mainColor} />
+                            <SimpleLineIcons name="options" size={24} color={Colors.mainColor} />
                         </TouchableOpacity>
                     }
                 >

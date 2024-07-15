@@ -1,26 +1,27 @@
-import { useState } from "react";
-import {
-    View,
-    Text,
-    StyleSheet,
-    Image,
-    FlatList,
-    TouchableOpacity,
-    TextInput,
-    KeyboardAvoidingView,
-    Platform
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Platform, KeyboardAvoidingView, TextInput, Image } from "react-native";
+import { Snackbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { EvilIcons } from '@expo/vector-icons';
-import { Snackbar } from "react-native-paper";
 
 import AddScheduleList from "../components/schedule/AddScheduleList";
+import { deleteSchedule, fetchSchedule } from "../util/http";
+
 
 function SearchScreen({ courseSchedules, setCourseSchedules }) {
     const navigation = useNavigation();
 
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [deletedSchedule, setDeletedSchedule] = useState(null);
+
+    // DB 에서 일정 값 가져오기
+    useEffect(() => {
+        async function getSchedules() {
+            const schedules = await fetchSchedule();
+            setCourseSchedules((currentCourseSchedules) => [...currentCourseSchedules, ...schedules]);
+        }
+        getSchedules();
+    }, []);
 
     function snackbarOn() {
         setSnackbarVisible(true);
@@ -30,9 +31,11 @@ function SearchScreen({ courseSchedules, setCourseSchedules }) {
         setSnackbarVisible(false);
     }
 
-    function deleteScheduleHandler(id) {
+    async function deleteScheduleHandler(id) {
         const scheduleToDelete = courseSchedules.find(schedule => schedule.id === id);
         if (scheduleToDelete) {
+            // DB에서 해당 id 삭제
+            await deleteSchedule(scheduleToDelete);
             setDeletedSchedule(scheduleToDelete);
             setCourseSchedules((currentCourseSchedules) => {
                 return currentCourseSchedules.filter((schedule) => schedule.id !== id);
@@ -49,6 +52,15 @@ function SearchScreen({ courseSchedules, setCourseSchedules }) {
         }
     }
 
+    function handleScroll(event) {
+        const scrollY = event.nativeEvent.contentOffset.y;
+        if (scrollY <= 40) { // 스크롤 위치가 50 이상이면 헤더 타이틀을 표시
+            navigation.setOptions({ headerTitle: '' });
+        } else {
+            navigation.setOptions({ headerTitle: '검색' });
+        }
+    }
+
     function todayScreenHandler() {
         navigation.navigate('MainOverview', {
             screen: '오늘',
@@ -57,62 +69,66 @@ function SearchScreen({ courseSchedules, setCourseSchedules }) {
 
     return (
         <>
-            <View style={styles.container}>
-                <KeyboardAvoidingView
-                    style={styles.container}
-                    behavior={Platform.OS === 'ios' ? 'padding' : null}
-                // 안드로이드에서 하단 네비게이션이 키보드 위로 올라오는 문제 해결해야 함.
-                >
-                    <View style={styles.topNavigation}>
-                        <Text style={styles.text}>검색</Text>
-                        <View style={styles.textInputContainer}>
-                            <EvilIcons name="search" size={24} color="gray" />
-                            <TextInput
-                                placeholder="작업, 프로젝트, 및 기타"
-                                style={styles.searchContainer}
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.scheduleContainer}>
-                        <View>
-                            <TouchableOpacity
-                                onPress={todayScreenHandler}
-                                style={({ pressed }) => pressed && styles.pressed}
-
-                            >
-                                <View style={{ flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: 'rgba(0, 0, 0, 0.1)' }}>
-                                    <View style={{ borderBottomWidth: 0 }}> 
-                                        {/* 이미지 아래에 있는 보더 값 덮어써야 함. */}
-                                        <Image
-                                            source={require('../assets/BottomTab/Today2.png')}
-                                            style={{ width: 24, height: 24, margin: 10 }}
-                                        />
-                                    </View>
-                                    <View>
-                                        <Text>오늘</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                        <FlatList
-                            data={courseSchedules}
-                            renderItem={(itemData) => {
-                                return (
-                                    <AddScheduleList
-                                        text={itemData.item.text}
-                                        id={itemData.item.id}
-                                        onDeleteSchedule={deleteScheduleHandler}
+            <FlatList
+                style={styles.container}
+                onScroll={handleScroll}
+                data={courseSchedules}
+                renderItem={(itemData) => {
+                    return (
+                        <AddScheduleList
+                            text={itemData.item.text}
+                            id={itemData.item.id}
+                            onDeleteSchedule={deleteScheduleHandler}
+                        />
+                    );
+                }}
+                keyExtractor={(item, index) => {
+                    return item.id;
+                }}
+                ListHeaderComponent={
+                    <View style={styles.container}>
+                        <KeyboardAvoidingView
+                            style={styles.container}
+                            behavior={Platform.OS === 'ios' ? 'padding' : null}
+                        // 안드로이드에서 하단 네비게이션이 키보드 위로 올라오는 문제 해결해야 함.
+                        >
+                            <View style={styles.topNavigation}>
+                                <Text style={styles.text}>검색</Text>
+                                <View style={styles.textInputContainer}>
+                                    <EvilIcons name="search" size={24} color="gray" />
+                                    <TextInput
+                                        placeholder="작업, 프로젝트, 및 기타"
+                                        style={styles.searchContainer}
                                     />
-                                );
-                            }}
-                            keyExtractor={(item, index) => {
-                                return item.id;
-                            }}
-                            alwaysBounceVertical={false}>
-                        </FlatList>
+                                </View>
+                            </View>
+                            <View style={styles.scheduleContainer}>
+                                <View>
+                                    <TouchableOpacity
+                                        onPress={todayScreenHandler}
+                                        style={({ pressed }) => pressed && styles.pressed}
+
+                                    >
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: 'rgba(0, 0, 0, 0.1)' }}>
+                                            <View style={{ borderBottomWidth: 0 }}>
+                                                {/* 이미지 아래에 있는 보더 값 덮어써야 함. */}
+                                                <Image
+                                                    source={require('../assets/BottomTab/Today2.png')}
+                                                    style={{ width: 24, height: 24, margin: 10 }}
+                                                />
+                                            </View>
+                                            <View>
+                                                <Text>오늘</Text>
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </KeyboardAvoidingView>
                     </View>
-                </KeyboardAvoidingView>
-            </View>
+                }
+            >
+            </FlatList>
             <Snackbar
                 visible={snackbarVisible}
                 onDismiss={snackbarOff}
@@ -137,10 +153,8 @@ const styles = StyleSheet.create({
     },
     topNavigation: {
         flex: 1,
-        maxHeight: Platform.OS === 'android' ? 110 : 100,
-        marginTop: 28,
         borderBottomWidth: 1,
-        borderBottomColor: 'gray', // #fafafa
+        borderBottomColor: 'rgba(0, 0, 0, 0.1)',
     },
     textInputContainer: {
         flex: 1,
@@ -150,15 +164,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
         borderRadius: 5,
         marginHorizontal: 12,
-        marginVertical: 20,
+        marginBottom: 12,
+        padding: 6
     },
     searchContainer: {
         flex: 1,
         fontSize: 16,
     },
     text: {
-        marginLeft: 10,
-        fontSize: 24,
+        margin: 10,
+        fontSize: 30,
         fontWeight: 'bold',
     },
     scheduleContainer: {

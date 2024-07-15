@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { Snackbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
@@ -52,7 +52,7 @@ function TodayScreen({ courseSchedules, setCourseSchedules }) {
 
     function handleScroll(event) {
         const scrollY = event.nativeEvent.contentOffset.y;
-        if (scrollY <= 50) { // 스크롤 위치가 50 이상이면 헤더 타이틀을 표시
+        if (scrollY <= 40) { // 스크롤 위치가 50 이상이면 헤더 타이틀을 표시
             navigation.setOptions({ headerTitle: '' });
         } else {
             navigation.setOptions({ headerTitle: '오늘' });
@@ -61,32 +61,28 @@ function TodayScreen({ courseSchedules, setCourseSchedules }) {
 
     return (
         <>
-            <ScrollView style={styles.container} onScroll={handleScroll}>
-                <View style={styles.container}>
+            <FlatList
+                style={styles.container}
+                onScroll={handleScroll}
+                data={courseSchedules}
+                renderItem={(itemData) => {
+                    return (
+                        <AddScheduleList
+                            text={itemData.item.text}
+                            id={itemData.item.id}
+                            onDeleteSchedule={deleteScheduleHandler}
+                        />
+                    );
+                }}
+                keyExtractor={(item, index) => {
+                    return item.id;
+                }}
+                ListHeaderComponent={
                     <View style={styles.topNavigation}>
                         <Text style={styles.text}>오늘</Text>
                     </View>
-                    <View style={styles.scheduleContainer}>
-                        <FlatList
-                            scrollEnabled={false}
-                            data={courseSchedules}
-                            renderItem={(itemData) => {
-                                return (
-                                    <AddScheduleList
-                                        text={itemData.item.text}
-                                        id={itemData.item.id}
-                                        onDeleteSchedule={deleteScheduleHandler}
-                                    />
-                                );
-                            }}
-                            keyExtractor={(item, index) => {
-                                return item.id;
-                            }}
-                            alwaysBounceVertical={false}>
-                        </FlatList>
-                    </View>
-                </View>
-            </ScrollView>
+                }
+            />
             <Snackbar
                 visible={snackbarVisible}
                 onDismiss={snackbarOff}
@@ -100,7 +96,7 @@ function TodayScreen({ courseSchedules, setCourseSchedules }) {
                 </View>
             </Snackbar>
         </>
-    )
+    );
 }
 
 export default TodayScreen;

@@ -1,13 +1,25 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { Snackbar } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 import AddScheduleList from "../components/schedule/AddScheduleList";
+import { deleteSchedule, fetchSchedule } from "../util/http";
 
 function ManagementBoxScreen({ courseSchedules, setCourseSchedules }) {
+    const navigation = useNavigation();
 
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [deletedSchedule, setDeletedSchedule] = useState(null);
+
+    // DB 에서 일정 값 가져오기
+    useEffect(() => {
+        async function getSchedules() {
+            const schedules = await fetchSchedule();
+            setCourseSchedules((currentCourseSchedules) => [...currentCourseSchedules, ...schedules]);
+        }
+        getSchedules();
+    }, []);
 
     function snackbarOn() {
         setSnackbarVisible(true);
@@ -17,9 +29,11 @@ function ManagementBoxScreen({ courseSchedules, setCourseSchedules }) {
         setSnackbarVisible(false);
     }
 
-    function deleteScheduleHandler(id) {
+    async function deleteScheduleHandler(id) {
         const scheduleToDelete = courseSchedules.find(schedule => schedule.id === id);
         if (scheduleToDelete) {
+            // DB에서 해당 id 삭제
+            await deleteSchedule(scheduleToDelete);
             setDeletedSchedule(scheduleToDelete);
             setCourseSchedules((currentCourseSchedules) => {
                 return currentCourseSchedules.filter((schedule) => schedule.id !== id);
@@ -36,31 +50,39 @@ function ManagementBoxScreen({ courseSchedules, setCourseSchedules }) {
         }
     }
 
+    function handleScroll(event) {
+        const scrollY = event.nativeEvent.contentOffset.y;
+        if (scrollY <= 40) { // 스크롤 위치가 50 이상이면 헤더 타이틀을 표시
+            navigation.setOptions({ headerTitle: '' });
+        } else {
+            navigation.setOptions({ headerTitle: '관리함' });
+        }
+    }
+
     return (
         <>
-            <View style={styles.container}>
-                <View style={styles.topNavigation}>
-                    <Text style={styles.text}>관리함</Text>
-                </View>
-                <View style={styles.scheduleContainer}>
-                    <FlatList
-                        data={courseSchedules}
-                        renderItem={(itemData) => {
-                            return (
-                                <AddScheduleList
-                                    text={itemData.item.text}
-                                    id={itemData.item.id}
-                                    onDeleteSchedule={deleteScheduleHandler}
-                                />
-                            );
-                        }}
-                        keyExtractor={(item, index) => {
-                            return item.id;
-                        }}
-                        alwaysBounceVertical={false}>
-                    </FlatList>
-                </View>
-            </View>
+            <FlatList
+                style={styles.container}
+                onScroll={handleScroll}
+                data={courseSchedules}
+                renderItem={(itemData) => {
+                    return (
+                        <AddScheduleList
+                            text={itemData.item.text}
+                            id={itemData.item.id}
+                            onDeleteSchedule={deleteScheduleHandler}
+                        />
+                    );
+                }}
+                keyExtractor={(item, index) => {
+                    return item.id;
+                }}
+                ListHeaderComponent={
+                    <View style={styles.topNavigation}>
+                        <Text style={styles.text}>관리함</Text>
+                    </View>
+                }
+            />
             <Snackbar
                 visible={snackbarVisible}
                 onDismiss={snackbarOff}
@@ -69,7 +91,7 @@ function ManagementBoxScreen({ courseSchedules, setCourseSchedules }) {
             >
                 <View>
                     <TouchableOpacity onPress={undoDeleteSchedule}>
-                        <Text style={{ color: '#fff' }}>실행 취소 을 완료했습니다.</Text>
+                        <Text style={{ color: '#fff' }}>실행 취소</Text>
                     </TouchableOpacity>
                 </View>
             </Snackbar>
@@ -84,13 +106,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     topNavigation: {
-        marginTop: 30,
         borderBottomWidth: 1,
-        borderBottomColor: 'gray', // #fafafa
+        borderBottomColor: 'rgba(0, 0, 0, 0.1)',
     },
     text: {
-        marginLeft: 10,
-        fontSize: 24,
+        margin: 10,
+        fontSize: 30,
         fontWeight: 'bold',
     },
     scheduleContainer: {

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Image, Platform, StyleSheet, View, TouchableOpacity, Linking, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { Feather, AntDesign, SimpleLineIcons } from '@expo/vector-icons';
+import { Feather, AntDesign, SimpleLineIcons, Ionicons } from '@expo/vector-icons';
 
 import TodayScreen from './screens/TodayScreen';
 import ManagementBoxScreen from "./screens/ManagementBoxScreen";
@@ -41,6 +42,8 @@ const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 function MainOverview() {
+  const navigation = useNavigation();
+
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseSchedules, setCourseSchedules] = useState([]);
 
@@ -64,6 +67,20 @@ function MainOverview() {
     ]);
   }
 
+  function ProductivityHandler() {
+    navigation.navigate('Productivity');
+  }
+
+  function AlarmHandler() {
+    navigation.navigate('Alarm');
+  }
+
+  function SettingHandler() {
+    navigation.navigate('SettingView', {
+      screen: 'Setting',
+    });
+  }
+
   return (
     <>
       <BottomTab.Navigator
@@ -79,6 +96,8 @@ function MainOverview() {
           name="오늘"
           options={{
             headerShown: true,
+            headerTitle: () => null,
+            headerTitleAlign: 'center',
             headerStyle: {
               borderBottomWidth: 0,
               shadowOpacity: 0, // iOS 그림자 제거
@@ -87,7 +106,7 @@ function MainOverview() {
             headerRight: () => (
               <View style={{ flexDirection: 'row', marginRight: 20 }}>
                 <View style={{ marginRight: 20 }}>
-                  <SimpleLineIcons name="options" size={18} color={Colors.mainColor} />
+                  <AntDesign name="warning" size={24} color={Colors.mainColor} />
                 </View>
                 <View>
                   <TopOption todayScreen={true} />
@@ -118,7 +137,24 @@ function MainOverview() {
         <BottomTab.Screen
           name="관리함 화면"
           options={{
-            headerShown: false,
+            headerShown: true,
+            headerTitle: () => null,
+            headerTitleAlign: 'center',
+            headerStyle: {
+              borderBottomWidth: 0,
+              shadowOpacity: 0, // iOS 그림자 제거
+              elevation: 0, // Android 그림자 제거
+            },
+            headerRight: () => (
+              <View style={{ flexDirection: 'row', marginRight: 20 }}>
+                <View style={{ marginRight: 20 }}>
+                  <AntDesign name="warning" size={24} color={Colors.mainColor} />
+                </View>
+                <View>
+                  <TopOption todayScreen={false} />
+                </View>
+              </View>
+            ),
             tabBarLabel: '관리함',
             tabBarIcon: ({ focused }) => (
               <Image
@@ -132,9 +168,6 @@ function MainOverview() {
         >
           {() => (
             <SafeAreaView style={styles.screen}>
-              <View style={styles.TopOption}>
-                <TopOption todayScreen={false} />
-              </View>
               <ManagementBoxScreen
                 courseSchedules={courseSchedules}
                 setCourseSchedules={setCourseSchedules}
@@ -146,7 +179,14 @@ function MainOverview() {
         <BottomTab.Screen
           name="검색 화면"
           options={{
-            headerShown: false,
+            headerShown: true,
+            headerTitle: () => null,
+            headerTitleAlign: 'center',
+            headerStyle: {
+              borderBottomWidth: 0,
+              shadowOpacity: 0, // iOS 그림자 제거
+              elevation: 0, // Android 그림자 제거
+            },
             tabBarLabel: '검색',
             tabBarIcon: ({ focused }) => (
               <Image
@@ -171,7 +211,45 @@ function MainOverview() {
         <BottomTab.Screen
           name="목록 화면"
           options={{
-            headerShown: false,
+            headerShown: true,
+            headerTitle: () => null,
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#f9f9f2',
+              borderBottomWidth: 0,
+              shadowOpacity: 0, // iOS 그림자 제거
+              elevation: 0, // Android 그림자 제거
+            },
+            headerLeft: () => (
+              <View style={{ flexDirection: 'row', margin: 10 }}>
+                <TouchableOpacity
+                  onPress={ProductivityHandler}
+                >
+                  <AntDesign name="user" size={24} color={Colors.mainColor} />
+                </TouchableOpacity>
+              </View>
+            ),
+            headerRight: () => (
+              <View style={{ flexDirection: 'row', margin: 10 }}>
+                <TouchableOpacity
+                  style={{ marginRight: 20 }}
+                >
+                  <AntDesign name="warning" size={24} color={Colors.mainColor} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={AlarmHandler}
+                  style={{ marginRight: 20 }}
+                >
+                  <Feather name="bell" size={24} color={Colors.mainColor} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={SettingHandler}
+                  style={{ marginRight: 10 }}
+                >
+                  <Ionicons name="settings-outline" size={24} color={Colors.mainColor} />
+                </TouchableOpacity>
+              </View>
+            ),
             tabBarLabel: '목록',
             tabBarIcon: ({ focused }) => (
               <Image
@@ -192,6 +270,7 @@ function MainOverview() {
         {viewScreen && (<BottomTab.Screen
           name="다음"
           options={{
+            headerTitleAlign: 'center',
             tabBarLabel: '다음',
             tabBarIcon: ({ focused }) => (
               <AntDesign name="calendar" size={25} color={focused ? Colors.mainColor : 'black'} />
@@ -206,13 +285,20 @@ function MainOverview() {
                 {/* { 
                   pressed 
                     ? <TouchableOpacity>
-                      <AntDesign name="warning" size={18} color={Colors.mainColor} />
+                      <AntDesign name="warning" size={24} color={Colors.mainColor} />
                     </TouchableOpacity>
                     : undefined
                 } */}
-                <TouchableOpacity style={{ marginRight: 20 }}>
-                  <SimpleLineIcons name="options" size={18} color={Colors.mainColor} />
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', margin: 10 }}>
+                  <TouchableOpacity
+                    style={{ marginRight: 20 }}
+                  >
+                    <AntDesign name="warning" size={24} color={Colors.mainColor} />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{ marginRight: 10 }}>
+                    <SimpleLineIcons name="options" size={24} color={Colors.mainColor} />
+                  </TouchableOpacity>
+                </View>
               </>
             )
           }}
@@ -231,7 +317,14 @@ function MainOverview() {
         {viewScreen && (<BottomTab.Screen
           name="필터 & 라벨"
           options={{
-            headerShown: false,
+            headerShown: true,
+            headerTitle: () => null,
+            headerTitleAlign: 'center',
+            headerStyle: {
+              borderBottomWidth: 0,
+              shadowOpacity: 0, // iOS 그림자 제거
+              elevation: 0, // Android 그림자 제거
+            },
             tabBarLabel: '필터 & 라벨',
             tabBarIcon: ({ focused }) => (
               <Image
