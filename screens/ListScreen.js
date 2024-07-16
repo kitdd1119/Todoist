@@ -9,15 +9,18 @@ function ListScreen() {
     const navigation = useNavigation();
 
     function ProjectHandler() {
-        navigation.navigate('Project');
-    }
+        navigation.navigate('Project', { headerShown: false });
+      }
+    
 
     function UpComingHandler() {
-        navigation.navigate('UpComing');
+        navigation.navigate('다음');
     }
 
     function FilterAndLabelHandler() {
-        navigation.navigate('FilterAndLabel');
+        navigation.navigate('MainOverview', {
+            screen: '필터 & 라벨',
+        });
     }
 
     return (

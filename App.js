@@ -51,6 +51,7 @@ function MainOverview() {
   // const navigationCheck = ;
   // const viewScreen = {{navigationCheck ? true : false}};
   const viewScreen = true;
+  const noViewScreen = false;
 
   function startScheduleAddButtonHandler() {
     setModalIsVisible(true);
@@ -135,7 +136,7 @@ function MainOverview() {
           )}
         </BottomTab.Screen>
         <BottomTab.Screen
-          name="관리함 화면"
+          name="관리함"
           options={{
             headerShown: true,
             headerTitle: () => null,
@@ -177,7 +178,7 @@ function MainOverview() {
           )}
         </BottomTab.Screen>
         <BottomTab.Screen
-          name="검색 화면"
+          name="검색"
           options={{
             headerShown: true,
             headerTitle: () => null,
@@ -209,7 +210,7 @@ function MainOverview() {
           )}
         </BottomTab.Screen>
         <BottomTab.Screen
-          name="목록 화면"
+          name="목록"
           options={{
             headerShown: true,
             headerTitle: () => null,
@@ -267,7 +268,7 @@ function MainOverview() {
             </SafeAreaView>
           )}
         </BottomTab.Screen>
-        {viewScreen && (<BottomTab.Screen
+        {noViewScreen && (<BottomTab.Screen
           name="다음"
           options={{
             headerTitleAlign: 'center',
@@ -669,6 +670,52 @@ export default function App() {
               statusBarStyle: Platform.OS === 'android' ? 'dark' : undefined
             }}
           />
+          <Stack.Screen
+            name="다음"
+            options={{
+              headerTitleAlign: 'center',
+              tabBarLabel: '다음',
+              tabBarIcon: ({ focused }) => (
+                <AntDesign name="calendar" size={25} color={focused ? Colors.mainColor : 'black'} />
+              ),
+              headerLeft: () => {
+                {
+                  // 바텀 탭 내비게이션에 포함된 것이 아닌 목록 화면에서 클릭한 다음 화면일 경우 뒤로가기 버튼 생성
+                }
+              },
+              headerRight: () => (
+                <>
+                  {/* { 
+                  pressed 
+                    ? <TouchableOpacity>
+                      <AntDesign name="warning" size={24} color={Colors.mainColor} />
+                    </TouchableOpacity>
+                    : undefined
+                } */}
+                  <View style={{ flexDirection: 'row', margin: 10 }}>
+                    <TouchableOpacity
+                      style={{ marginRight: 20 }}
+                    >
+                      <AntDesign name="warning" size={24} color={Colors.mainColor} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ marginRight: 10 }}>
+                      <SimpleLineIcons name="options" size={24} color={Colors.mainColor} />
+                    </TouchableOpacity>
+                  </View>
+                </>
+              )
+            }}
+          >
+            {() => (
+              <SafeAreaView style={styles.screen}>
+                <UpComing
+                  // courseSchedules={courseSchedules}
+                  // setCourseSchedules={setCourseSchedules}
+                />
+                {/* <ScheduleAddButton onModal={startScheduleAddButtonHandler} /> */}
+              </SafeAreaView>
+            )}
+          </Stack.Screen>
           <Stack.Screen
             name='ScheduleInformation'
             component={ScheduleInformation}
