@@ -216,7 +216,7 @@ function MainOverview() {
             headerTitle: () => null,
             headerTitleAlign: 'center',
             headerStyle: {
-              backgroundColor: '#f9f9f2',
+              backgroundColor: 'rgba(0, 0, 0, 0)',
               borderBottomWidth: 0,
               shadowOpacity: 0, // iOS 그림자 제거
               elevation: 0, // Android 그림자 제거
@@ -268,10 +268,15 @@ function MainOverview() {
             </SafeAreaView>
           )}
         </BottomTab.Screen>
-        {noViewScreen && (<BottomTab.Screen
+        {viewScreen && <BottomTab.Screen
           name="다음"
           options={{
             headerTitleAlign: 'center',
+            headerStyle: {
+              borderBottomWidth: 0,
+              shadowOpacity: 0, // iOS 그림자 제거
+              elevation: 0, // Android 그림자 제거
+            },
             tabBarLabel: '다음',
             tabBarIcon: ({ focused }) => (
               <AntDesign name="calendar" size={25} color={focused ? Colors.mainColor : 'black'} />
@@ -313,9 +318,8 @@ function MainOverview() {
               <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
             </SafeAreaView>
           )}
-        </BottomTab.Screen>
-        )}
-        {viewScreen && (<BottomTab.Screen
+        </BottomTab.Screen>}
+        {viewScreen && <BottomTab.Screen
           name="필터 & 라벨"
           options={{
             headerShown: true,
@@ -351,8 +355,7 @@ function MainOverview() {
               <ScheduleAddButton onModal={startScheduleAddButtonHandler} />
             </SafeAreaView>
           )}
-        </BottomTab.Screen>
-        )}
+        </BottomTab.Screen>}
       </BottomTab.Navigator>
       <ScheduleInput
         visible={modalIsVisible}
@@ -370,7 +373,6 @@ function ListScreenView({ startScheduleAddButtonHandler }) {
         name='ListScreen'
         options={{
           headerShown: false,
-          statusBarColor: Platform.OS === 'android' ? '#f9f9f2' : undefined
         }}
       >
         {() => (
@@ -410,6 +412,38 @@ function ListScreenView({ startScheduleAddButtonHandler }) {
         options={{
           headerShown: false,
           presentation: 'modal',
+        }}
+      />
+      <Stack.Screen
+        name='UpComing'
+        component={UpComing}
+        options={{
+          headerShown: true,
+          headerTitle: '다음',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            borderBottomWidth: 0,
+            shadowOpacity: 0, // iOS 그림자 제거
+            elevation: 0, // Android 그림자 제거
+          },
+          headerBackTitleVisible: null,
+          presentation: 'card',
+        }}
+      />
+      <Stack.Screen
+        name='FilterAndLabel'
+        component={FilterAndLabel}
+        options={{
+          headerShown: true,
+          headerTitle: ' ',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            borderBottomWidth: 0,
+            shadowOpacity: 0, // iOS 그림자 제거
+            elevation: 0, // Android 그림자 제거
+          },
+          headerBackTitleVisible: null,
+          presentation: 'card',
         }}
       />
     </Stack.Navigator>
@@ -656,7 +690,6 @@ function SettingView() {
 }
 
 export default function App() {
-
   return (
     <>
       <StatusBar style='dark' />
@@ -670,52 +703,6 @@ export default function App() {
               statusBarStyle: Platform.OS === 'android' ? 'dark' : undefined
             }}
           />
-          <Stack.Screen
-            name="다음"
-            options={{
-              headerTitleAlign: 'center',
-              tabBarLabel: '다음',
-              tabBarIcon: ({ focused }) => (
-                <AntDesign name="calendar" size={25} color={focused ? Colors.mainColor : 'black'} />
-              ),
-              headerLeft: () => {
-                {
-                  // 바텀 탭 내비게이션에 포함된 것이 아닌 목록 화면에서 클릭한 다음 화면일 경우 뒤로가기 버튼 생성
-                }
-              },
-              headerRight: () => (
-                <>
-                  {/* { 
-                  pressed 
-                    ? <TouchableOpacity>
-                      <AntDesign name="warning" size={24} color={Colors.mainColor} />
-                    </TouchableOpacity>
-                    : undefined
-                } */}
-                  <View style={{ flexDirection: 'row', margin: 10 }}>
-                    <TouchableOpacity
-                      style={{ marginRight: 20 }}
-                    >
-                      <AntDesign name="warning" size={24} color={Colors.mainColor} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ marginRight: 10 }}>
-                      <SimpleLineIcons name="options" size={24} color={Colors.mainColor} />
-                    </TouchableOpacity>
-                  </View>
-                </>
-              )
-            }}
-          >
-            {() => (
-              <SafeAreaView style={styles.screen}>
-                <UpComing
-                  // courseSchedules={courseSchedules}
-                  // setCourseSchedules={setCourseSchedules}
-                />
-                {/* <ScheduleAddButton onModal={startScheduleAddButtonHandler} /> */}
-              </SafeAreaView>
-            )}
-          </Stack.Screen>
           <Stack.Screen
             name='ScheduleInformation'
             component={ScheduleInformation}
@@ -737,7 +724,6 @@ const styles = StyleSheet.create({
   },
   screen2: {
     flex: 1,
-    backgroundColor: '#f9f9f2',
   },
   TopOption: {
     position: 'absolute',

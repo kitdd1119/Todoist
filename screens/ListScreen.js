@@ -9,18 +9,15 @@ function ListScreen() {
     const navigation = useNavigation();
 
     function ProjectHandler() {
-        navigation.navigate('Project', { headerShown: false });
-      }
-    
+        navigation.navigate('Project');
+    }
 
     function UpComingHandler() {
-        navigation.navigate('다음');
+        navigation.navigate('UpComing');
     }
 
     function FilterAndLabelHandler() {
-        navigation.navigate('MainOverview', {
-            screen: '필터 & 라벨',
-        });
+        navigation.navigate('FilterAndLabel');
     }
 
     return (
@@ -83,7 +80,6 @@ export default ListScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f9f9f2',
     },
     user: {
         flexDirection: 'row',

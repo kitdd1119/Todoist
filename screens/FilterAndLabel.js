@@ -112,6 +112,7 @@ export default FilterAndLabel;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white'
     },
     topNavigation: {
         // borderBottomWidth: 1,
