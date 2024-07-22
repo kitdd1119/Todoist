@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Platform, KeyboardAvoidingView, TextInput, Image } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Platform, KeyboardAvoidingView, TextInput, Image, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { Snackbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { EvilIcons } from '@expo/vector-icons';
+import { EvilIcons, AntDesign } from '@expo/vector-icons';
 
 import AddScheduleList from "../components/schedule/AddScheduleList";
 import { deleteSchedule, fetchSchedule } from "../util/http";
@@ -10,9 +10,12 @@ import { deleteSchedule, fetchSchedule } from "../util/http";
 
 function SearchScreen({ courseSchedules, setCourseSchedules }) {
     const navigation = useNavigation();
+    const inputRef = useRef(null);
 
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [deletedSchedule, setDeletedSchedule] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    // const [isFocused, setIsFocused] = useState(false);
 
     // DB 에서 일정 값 가져오기
     useEffect(() => {
@@ -67,12 +70,21 @@ function SearchScreen({ courseSchedules, setCourseSchedules }) {
         });
     }
 
+    const filteredSchedules = courseSchedules.filter(schedule =>
+        schedule.text.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    function inputDeleteHandler() {
+        setSearchQuery('');
+        inputRef.current.focus();
+    }
+
     return (
         <>
             <FlatList
                 style={styles.container}
                 onScroll={handleScroll}
-                data={courseSchedules}
+                data={filteredSchedules}
                 renderItem={(itemData) => {
                     return (
                         <AddScheduleList
@@ -89,19 +101,29 @@ function SearchScreen({ courseSchedules, setCourseSchedules }) {
                     <View style={styles.container}>
                         <KeyboardAvoidingView
                             style={styles.container}
-                            behavior={Platform.OS === 'ios' ? 'padding' : null}
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                         // 안드로이드에서 하단 네비게이션이 키보드 위로 올라오는 문제 해결해야 함.
                         >
-                            <View style={styles.topNavigation}>
-                                <Text style={styles.text}>검색</Text>
-                                <View style={styles.textInputContainer}>
-                                    <EvilIcons name="search" size={24} color="gray" />
-                                    <TextInput
-                                        placeholder="작업, 프로젝트, 및 기타"
-                                        style={styles.searchContainer}
-                                    />
+                            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                                <View style={styles.topNavigation}>
+                                    <Text style={styles.text}>검색</Text>
+                                    <View style={styles.textInputContainer}>
+                                        <EvilIcons name="search" size={24} color="gray" />
+                                        <TextInput
+                                            ref={inputRef}
+                                            placeholder="작업, 프로젝트, 및 기타"
+                                            style={styles.searchContainer}
+                                            value={searchQuery}
+                                            onChangeText={setSearchQuery}
+                                        />
+                                        {searchQuery.length >= 1 && (
+                                            <TouchableOpacity onPress={inputDeleteHandler}>
+                                                <AntDesign name="closecircle" size={18} color="gray" />
+                                            </TouchableOpacity>
+                                        )}
+                                    </View>
                                 </View>
-                            </View>
+                            </TouchableWithoutFeedback>
                             <View style={styles.scheduleContainer}>
                                 <View>
                                     <TouchableOpacity
