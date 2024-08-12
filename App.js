@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Image, Platform, StyleSheet, View, TouchableOpacity, Linking, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { Feather, AntDesign, SimpleLineIcons, Ionicons } from '@expo/vector-icons';
+import Realm from 'realm';
 
 import TodayScreen from './screens/TodayScreen';
 import ManagementBoxScreen from "./screens/ManagementBoxScreen";
@@ -37,6 +38,7 @@ import Introduction from './components/SettingView/Introduction';
 import NewUpdate from './components/SettingView/NewUpdate';
 import Synchronization from './components/SettingView/Synchronization';
 import TabBar from './components/SettingView/Navigation/TabBar';
+import Schedule from './components/models/Schedules';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -46,6 +48,19 @@ function MainOverview() {
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseSchedules, setCourseSchedules] = useState([]);
+
+  useEffect(() => {
+    const realm = new Realm({ schema: [Schedule] });
+
+    // Realm에서 저장된 일정 불러오기
+    const schedules = realm.objects("Schedule");
+    setCourseSchedules(schedules);
+
+    // 컴포넌트 언마운트 시 Realm 인스턴스를 닫습니다.
+    return () => {
+      realm.close();
+    };
+  }, []);
 
   // 설정의 내비게이션에 따라 바텀 탭에 표시가 되고 안되고 설정할 수 있는 함수를 작성해야 함.
   // const navigationCheck = ;
@@ -61,11 +76,32 @@ function MainOverview() {
     setModalIsVisible(false);
   }
 
+  // Realm 데이터베이스에 스케줄 추가하는 함수
   function addScheduleHandler(enteredScheduleText) {
-    setCourseSchedules(currentCourseSchedules => [
-      ...currentCourseSchedules,
-      { text: enteredScheduleText, id: Math.random().toString() }
-    ]);
+    // Realm 데이터베이스 열기
+    Realm.open({ schema: [Schedule.schema] })
+      .then(realm => {
+        // Realm 쓰기 트랜잭션 시작
+        realm.write(() => {
+          // 새로운 일정 추가
+          realm.create('Schedule', {
+            id: Math.random().toString(), // ID 생성
+            text: enteredScheduleText, // 입력된 일정 텍스트
+          });
+        });
+
+        // 로컬 상태 업데이트 (선택 사항)
+        setCourseSchedules(currentCourseSchedules => [
+          ...currentCourseSchedules,
+          { text: enteredScheduleText, id: Math.random().toString() }
+        ]);
+
+        // Realm 닫기
+        realm.close();
+      })
+      .catch(error => {
+        console.error('realm 실행 시 에러 발생: ', error);
+      });
   }
 
   function ProductivityHandler() {
